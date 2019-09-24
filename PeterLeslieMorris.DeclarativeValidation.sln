@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29318.209
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeterLeslieMorris.DeclarativeValidation", "src\PeterLeslieMorris.DeclarativeValidation\PeterLeslieMorris.DeclarativeValidation.csproj", "{9C8EEE3E-4EF6-4963-8EF5-458BD7D397AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{0302F36E-AF92-4F18-9F3D-D759440E42BE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleMemberValidationSample", "Samples\01-SimpleMemberValidationSample\SimpleMemberValidationSample\SimpleMemberValidationSample.csproj", "{96A21EB4-54CD-4A1B-8CA3-A43FE3A9BB29}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D8DDA998-48F1-41E5-B729-18478CA3F349}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreMvc", "samples\01-AspNetCoreMvc\AspNetCoreMvc\AspNetCoreMvc.csproj", "{E71EDA10-C15E-45F1-B0AB-F9C9354AFFF6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-AspNetCoreMvc", "01-AspNetCoreMvc", "{581F46D1-B967-4E9C-B2AF-2B0B5F1C0D36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeterLeslieMorris.DeclarativeValidation.UnitTests", "test\PeterLeslieMorris.DeclarativeValidation.UnitTests\PeterLeslieMorris.DeclarativeValidation.UnitTests.csproj", "{E2ED77FB-A16F-4D58-AEC3-D08AD5281E1B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C8EEE3E-4EF6-4963-8EF5-458BD7D397AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C8EEE3E-4EF6-4963-8EF5-458BD7D397AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C8EEE3E-4EF6-4963-8EF5-458BD7D397AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C8EEE3E-4EF6-4963-8EF5-458BD7D397AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96A21EB4-54CD-4A1B-8CA3-A43FE3A9BB29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96A21EB4-54CD-4A1B-8CA3-A43FE3A9BB29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96A21EB4-54CD-4A1B-8CA3-A43FE3A9BB29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96A21EB4-54CD-4A1B-8CA3-A43FE3A9BB29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E71EDA10-C15E-45F1-B0AB-F9C9354AFFF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E71EDA10-C15E-45F1-B0AB-F9C9354AFFF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E71EDA10-C15E-45F1-B0AB-F9C9354AFFF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E71EDA10-C15E-45F1-B0AB-F9C9354AFFF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2ED77FB-A16F-4D58-AEC3-D08AD5281E1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2ED77FB-A16F-4D58-AEC3-D08AD5281E1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2ED77FB-A16F-4D58-AEC3-D08AD5281E1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2ED77FB-A16F-4D58-AEC3-D08AD5281E1B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{96A21EB4-54CD-4A1B-8CA3-A43FE3A9BB29} = {0302F36E-AF92-4F18-9F3D-D759440E42BE}
+		{E71EDA10-C15E-45F1-B0AB-F9C9354AFFF6} = {581F46D1-B967-4E9C-B2AF-2B0B5F1C0D36}
+		{581F46D1-B967-4E9C-B2AF-2B0B5F1C0D36} = {0302F36E-AF92-4F18-9F3D-D759440E42BE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0C9B53D7-7326-409D-9372-5F525F350F33}
+	EndGlobalSection
+EndGlobal

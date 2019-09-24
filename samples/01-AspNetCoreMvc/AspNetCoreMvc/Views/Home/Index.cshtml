@@ -1,0 +1,11 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+}
+@model Person
+
+<p>
+	EmailAddress error = @Html.ValidationMessageFor(x => x.EmailAddress)
+</p>
+<p>
+	Address.Lines error = @Html.ValidationMessageFor(x => x.Address.Lines)
+</p>
