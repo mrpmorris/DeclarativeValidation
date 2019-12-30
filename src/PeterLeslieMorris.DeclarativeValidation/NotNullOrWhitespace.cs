@@ -9,6 +9,6 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			this ClassValidationBuilder<TClass> builder,
 			Expression<Func<TClass, string>> member)
 			where TClass : class
-			=> builder.AddJsonDefinition($"notNullOrWhitespace", $"{{\"member\": \"{member.GetPath()}\"}}");
+			=> builder.AddJsonDefinition($"notNullOrWhitespace", $"{{\"member\":\"{member.GetPath()}\"}}");
 	}
 }

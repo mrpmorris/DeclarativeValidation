@@ -10,13 +10,13 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			Expression<Func<TClass, TProperty>> member)
 			where TClass : class
 			where TProperty : class
-			=> builder.AddJsonDefinition($"isNull", $"{{\"member\": \"{member.GetPath()}\"}}");
+			=> builder.AddJsonDefinition($"isNull", $"{{\"member\":\"{member.GetPath()}\"}}");
 
 		public static ClassValidationBuilder<TClass> IsNull<TClass, TProperty>(
 			this ClassValidationBuilder<TClass> builder,
 			Expression<Func<TClass, TProperty?>> member)
 			where TClass : class
 			where TProperty : struct
-			=> builder.AddJsonDefinition($"isNull", $"{{\"member\": \"{member.GetPath()}\"}}");
+			=> builder.AddJsonDefinition($"isNull", $"{{\"member\":\"{member.GetPath()}\"}}");
 	}
 }
