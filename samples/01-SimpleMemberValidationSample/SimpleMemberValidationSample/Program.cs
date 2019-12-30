@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimpleMemberValidationSample.ValidationProfiles;
+using System;
 
 namespace SimpleMemberValidationSample
 {
@@ -6,7 +7,9 @@ namespace SimpleMemberValidationSample
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			var profile = new PersonValidation();
+			string json = Newtonsoft.Json.JsonConvert.ToString(profile);
+
 		}
 	}
 }
