@@ -1,4 +1,4 @@
-﻿namespace PeterLeslieMorris.DeclarativeValidation
+﻿namespace PeterLeslieMorris.DeclarativeValidation.Rules
 {
 	public class MinLengthRule : MemberRule
 	{

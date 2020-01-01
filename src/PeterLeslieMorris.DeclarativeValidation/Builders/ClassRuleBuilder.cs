@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace PeterLeslieMorris.DeclarativeValidation
+namespace PeterLeslieMorris.DeclarativeValidation.Builders
 {
 	internal sealed class ClassRuleBuilder<TClass> : IClassRuleBuilder<TClass>
 		where TClass : class

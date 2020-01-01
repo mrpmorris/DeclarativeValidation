@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq.Expressions;
+using PeterLeslieMorris.DeclarativeValidation.Builders;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	public static class WhenAllExtensions
+	public static class WhenAnyExtensions
 	{
-		public static IClassRuleBuilder<TClass> WhenAll<TClass, TProperty>(
+		public static IClassRuleBuilder<TClass> WhenAny<TClass, TProperty>(
 				this IClassRuleBuilder<TClass> builder,
 				Expression<Func<TClass, TProperty>> member,
 				Action<IMemberRuleBuilder<TClass, TProperty>> condition,

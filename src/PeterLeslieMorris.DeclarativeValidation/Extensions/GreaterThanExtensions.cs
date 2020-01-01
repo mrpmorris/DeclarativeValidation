@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using PeterLeslieMorris.DeclarativeValidation.Builders;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {

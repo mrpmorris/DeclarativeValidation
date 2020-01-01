@@ -1,4 +1,4 @@
-﻿namespace PeterLeslieMorris.DeclarativeValidation
+﻿namespace PeterLeslieMorris.DeclarativeValidation.Builders
 {
 	public interface IMemberRuleBuilder : IRuleBuilder
 	{

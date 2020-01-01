@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using PeterLeslieMorris.DeclarativeValidation.Builders;
+using PeterLeslieMorris.DeclarativeValidation.Rules;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {

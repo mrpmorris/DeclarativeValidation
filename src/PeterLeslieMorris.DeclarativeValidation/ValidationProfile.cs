@@ -1,4 +1,5 @@
 ﻿using System;
+using PeterLeslieMorris.DeclarativeValidation.Builders;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {

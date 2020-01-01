@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq.Expressions;
+using PeterLeslieMorris.DeclarativeValidation.Builders;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	public static class NotGreaterThanExtensions
+	public static class LessThanExtensions
 	{
-		public static IMemberRuleBuilder<TClass, TProperty> NotGreaterThan<TClass, TProperty>(
+		public static IMemberRuleBuilder<TClass, TProperty> LessThan<TClass, TProperty>(
 				this IMemberRuleBuilder<TClass, TProperty> builder,
 				TProperty value,
 				string errorCode = null,
@@ -17,7 +18,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			return builder;
 		}
 
-		public static IMemberRuleBuilder<TClass, TProperty> NotGreaterThan<TClass, TProperty, TOtherProperty>(
+		public static IMemberRuleBuilder<TClass, TProperty> LessThan<TClass, TProperty, TOtherProperty>(
 				this IMemberRuleBuilder<TClass, TProperty> builder,
 				Expression<Func<TClass, TOtherProperty>> other,
 				string errorCode = null,
@@ -29,7 +30,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			return builder;
 		}
 
-		public static IMemberRuleBuilder<TClass, TProperty> NotGreaterThan<TClass, TProperty, TOtherProperty>(
+		public static IMemberRuleBuilder<TClass, TProperty> LessThan<TClass, TProperty, TOtherProperty>(
 				this IMemberRuleBuilder<TClass, TProperty> builder,
 				Expression<Func<TClass, TOtherProperty?>> other,
 				string errorCode = null,

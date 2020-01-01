@@ -1,4 +1,6 @@
-﻿namespace PeterLeslieMorris.DeclarativeValidation
+﻿using PeterLeslieMorris.DeclarativeValidation.Builders;
+
+namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public static class NotNullExtensions
 	{

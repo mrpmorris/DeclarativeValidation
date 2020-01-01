@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace PeterLeslieMorris.DeclarativeValidation
+namespace PeterLeslieMorris.DeclarativeValidation.Builders
 {
 	public interface IClassRuleBuilder : IRuleBuilder
 	{

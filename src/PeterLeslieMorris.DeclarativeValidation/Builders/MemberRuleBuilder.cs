@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace PeterLeslieMorris.DeclarativeValidation
+namespace PeterLeslieMorris.DeclarativeValidation.Builders
 {
 	internal class MemberRuleBuilder<TClass, TProperty> : IMemberRuleBuilder<TClass, TProperty>
 		where TClass : class
