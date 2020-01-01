@@ -18,6 +18,16 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			return this;
 		}
 
+		public IClassRuleBuilder<TClass> ForMember<TProperty>(
+			Expression<Func<TClass, TProperty?>> member,
+			Action<IMemberRuleBuilder<TClass, TProperty?>> validation)
+			where TProperty: struct
+		{
+			var memberRuleBuilder = new MemberRuleBuilder<TClass, TProperty?>(member);
+			validation(memberRuleBuilder);
+			return this;
+		}
+
 		void IRuleBuilder.Build(out string json, out Rule rule)
 		{
 			throw new NotImplementedException();

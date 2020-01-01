@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	internal sealed class MemberRuleBuilder<TClass, TProperty> : IMemberRuleBuilder<TClass, TProperty>
+	internal class MemberRuleBuilder<TClass, TProperty> : IMemberRuleBuilder<TClass, TProperty>
 		where TClass : class
 	{
 		public readonly string Member;

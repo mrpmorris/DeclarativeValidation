@@ -8,15 +8,16 @@ namespace SimpleMemberValidationSample.ValidationProfiles
 		public PersonValidation()
 		{
 			ForClass<Person>(x => x
-				.ForMember(x => x.HomeAddress, v => v.NotNull())
-				.ForMember(x => x.DateOfDeath, v => v.NotNull())
-				.ForMember(x => x.Name, v => v.MinLength(3))
-				.When(x => x.Name, m => m.NotNull(), v => v
-					.ForMember(x => x.DateOfDeath, v => v.NotNull())
-					.ForMember(x => x.HomeAddress.Lines, v => v.MinLength(2))
+				.ForMember(c => c.HomeAddress, v => v.NotNull())
+				.ForMember(c => c.DateOfDeath, v => v.NotNull())
+				.ForMember(c => c.Name, v => v.MinLength(3))
+				.WhenAll(c => c.Name, m => m.NotNull(), v => v
+					.ForMember(c => c.DateOfDeath, v => v.NotNull())
+					.ForMember(c => c.HomeAddress.Lines, v => v.MinLength(2))
 				)
-				.When(x => x.DateOfDeath, m => m.NotNull(), v => v
-					.ForMember(x => x.DateOfBirth, v => v.NotLessThan(x => x.DateOfBirth))
+				.WhenAll(c => c.DateOfDeath, m => m.NotNull(), v => v
+					.ForMember(c => c.DateOfBirth, v => v.NotLessThan(c => c.DateOfDeath))
+					.ForMember(c => c.Name, v => v.EqualTo(c => c.HomeAddress.Country.Code))
 				)
 			);
 		}

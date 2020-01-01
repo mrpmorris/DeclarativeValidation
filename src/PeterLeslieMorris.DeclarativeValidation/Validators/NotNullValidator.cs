@@ -4,9 +4,20 @@
 	{
 		public static IMemberRuleBuilder<TClass, TProperty> NotNull<TClass, TProperty>(
 				this IMemberRuleBuilder<TClass, TProperty> builder,
-				string errorCode = "NotNull"
+				string errorCode = null
 			)
 			where TClass : class
+			where TProperty : class
+		{
+			return builder;
+		}
+
+		public static IMemberRuleBuilder<TClass, TProperty?> NotNull<TClass, TProperty>(
+				this IMemberRuleBuilder<TClass, TProperty?> builder,
+				string errorCode = null
+			)
+			where TClass : class
+			where TProperty : struct
 		{
 			return builder;
 		}

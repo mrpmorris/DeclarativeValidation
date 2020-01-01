@@ -7,7 +7,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 		public static IMemberRuleBuilder<TClass, TProperty> MinLength<TClass, TProperty>(
 				this IMemberRuleBuilder<TClass, TProperty> builder,
 				ulong min,
-				string errorCode = "MinLength"
+				string errorCode = null
 			)
 			where TClass : class
 			where TProperty: IEnumerable
