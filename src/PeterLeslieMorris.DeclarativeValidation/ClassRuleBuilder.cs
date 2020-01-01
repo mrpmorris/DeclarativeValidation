@@ -27,10 +27,5 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			validation(memberRuleBuilder);
 			return this;
 		}
-
-		void IRuleBuilder.Build(out string json, out Rule rule)
-		{
-			throw new NotImplementedException();
-		}
 	}
 }
