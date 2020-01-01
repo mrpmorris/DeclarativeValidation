@@ -6,6 +6,8 @@ namespace PeterLeslieMorris.DeclarativeValidation
 	{
 		public void ForClass<TClass>(Action<IClassRuleBuilder<TClass>> validation)
 			where TClass : class
-		=> validation(new ClassRuleBuilder<TClass>());
+		{
+			validation(new ClassRuleBuilder<TClass>());
+		}
 	}
 }

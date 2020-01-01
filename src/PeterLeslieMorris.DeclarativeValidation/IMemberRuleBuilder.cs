@@ -8,6 +8,5 @@
 	public interface IMemberRuleBuilder<TClass, TProperty>
 		where TClass: class
 	{
-
 	}
 }
