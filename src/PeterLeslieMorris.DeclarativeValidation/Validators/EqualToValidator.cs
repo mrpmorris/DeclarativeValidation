@@ -10,7 +10,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 				this IMemberRuleBuilder<TClass, TProperty> builder,
 				TProperty value,
 				string errorCode = null,
-				string errorMessage = null
+				string errorMessageFormat = null
 			)
 			where TClass : class
 			where TProperty : IEquatable<TProperty>
@@ -22,7 +22,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 				this IMemberRuleBuilder<TClass, TProperty> builder,
 				Expression<Func<TClass, TOtherProperty>> other,
 				string errorCode = null,
-				string errorMessage = null
+				string errorMessageFormat = null
 			)
 			where TClass : class
 			where TProperty : IEquatable<TOtherProperty>
@@ -34,7 +34,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 				this IMemberRuleBuilder<TClass, TProperty> builder,
 				Expression<Func<TClass, TOtherProperty?>> other,
 				string errorCode = null,
-				string errorMessage = null
+				string errorMessageFormat = null
 			)
 			where TClass : class
 			where TProperty : IEquatable<TOtherProperty>

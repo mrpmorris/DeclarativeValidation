@@ -8,7 +8,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 				this IMemberRuleBuilder<TClass, TProperty> builder,
 				ulong min,
 				string errorCode = null,
-				string errorMessage = null
+				string errorMessageFormat = null
 			)
 			where TClass : class
 			where TProperty: IEnumerable
