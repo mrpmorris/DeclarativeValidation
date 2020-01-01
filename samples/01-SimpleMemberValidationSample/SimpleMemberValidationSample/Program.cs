@@ -1,5 +1,4 @@
 ﻿using SimpleMemberValidationSample.ValidationProfiles;
-using System;
 
 namespace SimpleMemberValidationSample
 {

@@ -14,7 +14,6 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			where TProperty: IEnumerable
 		{
 			var rule = new MaxLengthRule(
-				member: builder.Member,
 				max: max,
 				errorCode: errorCode,
 				errorMessageFormat: errorMessageFormat);
@@ -27,9 +26,8 @@ namespace PeterLeslieMorris.DeclarativeValidation
 	{
 		public readonly ulong Max;
 
-		public MaxLengthRule(string member, ulong max, string errorCode, string errorMessageFormat)
+		public MaxLengthRule(ulong max, string errorCode, string errorMessageFormat)
 			: base(
-					member: member,
 					errorCode: errorCode ?? "MaxLength",
 					errorMessageFormat: errorMessageFormat ?? "Max length {0}")
 		{
