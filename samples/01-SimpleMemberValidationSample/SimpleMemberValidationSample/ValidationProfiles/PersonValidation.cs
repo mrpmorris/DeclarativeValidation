@@ -7,11 +7,14 @@ namespace SimpleMemberValidationSample.ValidationProfiles
 	{
 		public PersonValidation()
 		{
-			ForClass<Person>(x => x
-				.ForMember(c => c.HomeAddress, p => p
-					.NotNull())
-				.ForMember(c => c.DateOfDeath, p => p
-					.NotNull())
+			ForClass<Person>(_ => _
+				.ForMember(x => x.HomeAddress, v => v.NotNull())
+				.ForMember(x => x.DateOfDeath, v => v.NotNull())
+				.ForMember(x => x.Name, v => v.MinLength(3))
+				.When(x => x.Name, c => c.NotNull(), v => v
+					.ForMember(x => x.DateOfDeath, v => v.NotNull())
+					.ForMember(x => x.HomeAddress.Lines, v => v.MinLength(2))
+				)
 			);
 		}
 	}
