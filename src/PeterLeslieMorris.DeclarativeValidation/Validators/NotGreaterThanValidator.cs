@@ -5,9 +5,22 @@ namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public static class NotGreaterThanExtension
 	{
+		public static IMemberRuleBuilder<TClass, TProperty> NotGreaterThan<TClass, TProperty>(
+				this IMemberRuleBuilder<TClass, TProperty> builder,
+				TProperty value,
+				string errorCode = null,
+				string errorMessage = null
+			)
+			where TClass : class
+			where TProperty : IComparable<TProperty>
+		{
+			return builder;
+		}
+
 		public static IMemberRuleBuilder<TClass, TProperty> NotGreaterThan<TClass, TProperty, TOtherProperty>(
 				this IMemberRuleBuilder<TClass, TProperty> builder,
 				Expression<Func<TClass, TOtherProperty>> other,
+				string errorCode = null,
 				string errorMessage = null
 			)
 			where TClass : class
@@ -19,6 +32,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 		public static IMemberRuleBuilder<TClass, TProperty> NotGreaterThan<TClass, TProperty, TOtherProperty>(
 				this IMemberRuleBuilder<TClass, TProperty> builder,
 				Expression<Func<TClass, TOtherProperty?>> other,
+				string errorCode = null,
 				string errorMessage = null
 			)
 			where TClass : class

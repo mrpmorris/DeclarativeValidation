@@ -4,7 +4,8 @@
 	{
 		public static IMemberRuleBuilder<TClass, TProperty> NotNull<TClass, TProperty>(
 				this IMemberRuleBuilder<TClass, TProperty> builder,
-				string errorCode = null
+				string errorCode = null,
+				string errorMessage = null
 			)
 			where TClass : class
 			where TProperty : class
@@ -14,7 +15,8 @@
 
 		public static IMemberRuleBuilder<TClass, TProperty?> NotNull<TClass, TProperty>(
 				this IMemberRuleBuilder<TClass, TProperty?> builder,
-				string errorCode = null
+				string errorCode = null,
+				string errorMessage = null
 			)
 			where TClass : class
 			where TProperty : struct

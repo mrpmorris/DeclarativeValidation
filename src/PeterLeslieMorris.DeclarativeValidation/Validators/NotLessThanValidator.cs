@@ -5,9 +5,23 @@ namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public static class NotLessThanExtension
 	{
+		public static IMemberRuleBuilder<TClass, TProperty> NotLessThan<TClass, TProperty>(
+				this IMemberRuleBuilder<TClass, TProperty> builder,
+				TProperty value,
+				string errorCode = null,
+				string errorMessage = null
+			)
+			where TClass : class
+			where TProperty : IComparable<TProperty>
+		{
+			return builder;
+		}
+
 		public static IMemberRuleBuilder<TClass, TProperty> NotLessThan<TClass, TProperty, TOtherProperty>(
 				this IMemberRuleBuilder<TClass, TProperty> builder,
-				Expression<Func<TClass, TOtherProperty>> other
+				Expression<Func<TClass, TOtherProperty>> other,
+				string errorCode = null,
+				string errorMessage = null
 			)
 			where TClass : class
 			where TProperty : IComparable<TOtherProperty>
@@ -17,7 +31,9 @@ namespace PeterLeslieMorris.DeclarativeValidation
 
 		public static IMemberRuleBuilder<TClass, TProperty> NotLessThan<TClass, TProperty, TOtherProperty>(
 				this IMemberRuleBuilder<TClass, TProperty> builder,
-				Expression<Func<TClass, TOtherProperty?>> other
+				Expression<Func<TClass, TOtherProperty?>> other,
+				string errorCode = null,
+				string errorMessage = null
 			)
 			where TClass : class
 			where TProperty : IComparable<TOtherProperty>

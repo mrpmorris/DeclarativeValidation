@@ -2,11 +2,11 @@
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	public static class MinLengthExtension
+	public static class MaxLengthExtension
 	{
-		public static IMemberRuleBuilder<TClass, TProperty> MinLength<TClass, TProperty>(
+		public static IMemberRuleBuilder<TClass, TProperty> MaxLength<TClass, TProperty>(
 				this IMemberRuleBuilder<TClass, TProperty> builder,
-				ulong min,
+				ulong max,
 				string errorCode = null,
 				string errorMessage = null
 			)
