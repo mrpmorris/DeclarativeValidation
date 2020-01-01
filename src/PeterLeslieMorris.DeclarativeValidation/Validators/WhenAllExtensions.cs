@@ -3,9 +3,9 @@ using System.Linq.Expressions;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	public static class WhenAnyExtension
+	public static class WhenAllExtensions
 	{
-		public static IClassRuleBuilder<TClass> WhenAny<TClass, TProperty>(
+		public static IClassRuleBuilder<TClass> WhenAll<TClass, TProperty>(
 				this IClassRuleBuilder<TClass> builder,
 				Expression<Func<TClass, TProperty>> member,
 				Action<IMemberRuleBuilder<TClass, TProperty>> condition,

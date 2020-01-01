@@ -3,9 +3,9 @@ using System.Linq.Expressions;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	public static class GreaterThanExtension
+	public static class NotLessThanExtensions
 	{
-		public static IMemberRuleBuilder<TClass, TProperty> GreaterThan<TClass, TProperty>(
+		public static IMemberRuleBuilder<TClass, TProperty> NotLessThan<TClass, TProperty>(
 				this IMemberRuleBuilder<TClass, TProperty> builder,
 				TProperty value,
 				string errorCode = null,
@@ -17,7 +17,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			return builder;
 		}
 
-		public static IMemberRuleBuilder<TClass, TProperty> GreaterThan<TClass, TProperty, TOtherProperty>(
+		public static IMemberRuleBuilder<TClass, TProperty> NotLessThan<TClass, TProperty, TOtherProperty>(
 				this IMemberRuleBuilder<TClass, TProperty> builder,
 				Expression<Func<TClass, TOtherProperty>> other,
 				string errorCode = null,
@@ -29,7 +29,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			return builder;
 		}
 
-		public static IMemberRuleBuilder<TClass, TProperty> GreaterThan<TClass, TProperty, TOtherProperty>(
+		public static IMemberRuleBuilder<TClass, TProperty> NotLessThan<TClass, TProperty, TOtherProperty>(
 				this IMemberRuleBuilder<TClass, TProperty> builder,
 				Expression<Func<TClass, TOtherProperty?>> other,
 				string errorCode = null,
@@ -41,7 +41,5 @@ namespace PeterLeslieMorris.DeclarativeValidation
 		{
 			return builder;
 		}
-
-
 	}
 }
