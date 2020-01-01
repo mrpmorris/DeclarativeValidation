@@ -13,25 +13,30 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			where TClass : class
 			where TProperty: IEnumerable
 		{
-			var validator = new MaxLengthRule(
+			var rule = new MaxLengthRule(
+				member: builder.Member,
 				max: max,
 				errorCode: errorCode,
 				errorMessageFormat: errorMessageFormat);
+			builder.AddRule(rule);
 			return builder;
 		}
 	}
 
-	public class MaxLengthRule : Rule
+	public class MaxLengthRule : MemberRule
 	{
 		public readonly ulong Max;
 
-		public MaxLengthRule(ulong max, string errorCode, string errorMessageFormat)
+		public MaxLengthRule(string member, ulong max, string errorCode, string errorMessageFormat)
 			: base(
+					member: member,
 					errorCode: errorCode ?? "MaxLength",
 					errorMessageFormat: errorMessageFormat ?? "Max length {0}")
 		{
 			Max = max;
 		}
+
+		public override string GetErrorMessage() => string.Format(ErrorMessageFormat, Max);
 
 		public override string ToJson()
 		{

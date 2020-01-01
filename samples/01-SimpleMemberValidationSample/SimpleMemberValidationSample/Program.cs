@@ -8,8 +8,6 @@ namespace SimpleMemberValidationSample
 		static void Main(string[] args)
 		{
 			var profile = new PersonValidation();
-			string json = Newtonsoft.Json.JsonConvert.ToString(profile);
-
 		}
 	}
 }

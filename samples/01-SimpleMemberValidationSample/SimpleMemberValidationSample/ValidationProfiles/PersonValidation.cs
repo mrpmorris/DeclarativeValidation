@@ -10,7 +10,7 @@ namespace SimpleMemberValidationSample.ValidationProfiles
 			ForClass<Person>(x => x
 				.ForMember(c => c.HomeAddress, v => v.NotNull())
 				.ForMember(c => c.DateOfDeath, v => v.NotNull())
-				.ForMember(c => c.Name, v => v.MinLength(3))
+				.ForMember(c => c.Name, v => v.MinLength(3).MaxLength(4))
 				.WhenAll(c => c.Name, m => m.NotNull(), v => v
 					.ForMember(c => c.DateOfDeath, v => v.NotNull())
 					.ForMember(c => c.HomeAddress.Lines, v => v.MinLength(2))

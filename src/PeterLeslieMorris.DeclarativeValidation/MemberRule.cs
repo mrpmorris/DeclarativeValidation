@@ -1,14 +1,21 @@
-﻿namespace PeterLeslieMorris.DeclarativeValidation
-{
-	public abstract class MemberRule
-	{
-		public string Member { get; private set; }
-		public string ErrorCode { get; private set; }
+﻿using System;
 
-		protected MemberRule(string member, string errorCode)
+namespace PeterLeslieMorris.DeclarativeValidation
+{
+	public abstract class MemberRule : Rule
+	{
+		public readonly string Member;
+		public readonly string ErrorCode;
+		public readonly string ErrorMessageFormat;
+
+		public abstract string GetErrorMessage();
+
+		public MemberRule(string member, string errorCode, string errorMessageFormat)
 		{
 			Member = member;
-			ErrorCode = errorCode;
+			ErrorCode = errorCode ?? throw new NullReferenceException(nameof(errorCode));
+			ErrorMessageFormat = errorMessageFormat ?? throw new NullReferenceException(nameof(errorMessageFormat));
 		}
+
 	}
 }

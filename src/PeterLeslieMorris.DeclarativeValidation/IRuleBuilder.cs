@@ -2,5 +2,6 @@
 {
 	public interface IRuleBuilder
 	{
+		void AddRule(Rule rule);
 	}
 }

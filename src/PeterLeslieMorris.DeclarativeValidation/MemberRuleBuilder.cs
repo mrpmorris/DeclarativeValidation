@@ -6,11 +6,19 @@ namespace PeterLeslieMorris.DeclarativeValidation
 	internal class MemberRuleBuilder<TClass, TProperty> : IMemberRuleBuilder<TClass, TProperty>
 		where TClass : class
 	{
-		public readonly string Member;
+		private readonly IRuleBuilder Parent;
 
-		internal MemberRuleBuilder(Expression<Func<TClass, TProperty>> member)
+		public string Member { get; }
+
+		internal MemberRuleBuilder(IRuleBuilder parent, Expression<Func<TClass, TProperty>> member)
 		{
+			Parent = parent;
 			Member = member.GetPath();
+		}
+
+		public void AddRule(Rule rule)
+		{
+			Parent.AddRule(rule);
 		}
 	}
 }

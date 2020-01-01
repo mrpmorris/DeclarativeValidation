@@ -5,7 +5,7 @@
 		string Member { get; }
 	}
 
-	public interface IMemberRuleBuilder<TClass, TProperty>
+	public interface IMemberRuleBuilder<TClass, TProperty> : IMemberRuleBuilder
 		where TClass: class
 	{
 	}
