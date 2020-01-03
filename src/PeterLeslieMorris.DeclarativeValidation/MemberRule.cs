@@ -4,16 +4,9 @@ namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public abstract class MemberRule : Rule
 	{
-		public readonly string ErrorCode;
-		public readonly string ErrorMessageFormat;
+		public string ErrorCode { get; set; }
+		public string ErrorMessageFormat { get; set; }
 
 		public abstract string GetErrorMessage();
-
-		public MemberRule(string errorCode, string errorMessageFormat)
-		{
-			ErrorCode = errorCode ?? throw new NullReferenceException(nameof(errorCode));
-			ErrorMessageFormat = errorMessageFormat ?? throw new NullReferenceException(nameof(errorMessageFormat));
-		}
-
 	}
 }

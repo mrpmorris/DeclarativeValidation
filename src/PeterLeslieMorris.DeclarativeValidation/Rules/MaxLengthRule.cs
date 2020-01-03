@@ -2,14 +2,12 @@
 {
 	public class MaxLengthRule : MemberRule
 	{
-		public readonly ulong Max;
+		public ulong Max { get; set; }
 
-		public MaxLengthRule(ulong max, string errorCode, string errorMessageFormat)
-			: base(
-					errorCode: errorCode ?? "MaxLength",
-					errorMessageFormat: errorMessageFormat ?? "Max length {0}")
+		public MaxLengthRule()
 		{
-			Max = max;
+			ErrorCode = "MaxLength";
+			ErrorMessageFormat = "Maximum length {0}";
 		}
 
 		public override string GetErrorMessage() => string.Format(ErrorMessageFormat, Max);

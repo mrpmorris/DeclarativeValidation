@@ -15,11 +15,12 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			where TClass : class
 			where TProperty: IEnumerable
 		{
-			var rule = new MinLengthRule(
-				min: min,
-				errorCode: errorCode,
-				errorMessageFormat: errorMessageFormat);
-			builder.AddRule(rule);
+			var factory = new RuleFactory<MinLengthRule>(x => {
+				x.Min = min;
+				x.ErrorCode = errorCode ?? x.ErrorCode;
+				x.ErrorMessageFormat = errorMessageFormat ?? x.ErrorMessageFormat;
+			});
+			builder.AddRuleFactory(factory);
 			return builder;
 		}
 	}

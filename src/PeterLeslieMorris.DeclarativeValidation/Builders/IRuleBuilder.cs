@@ -2,6 +2,6 @@
 {
 	public interface IRuleBuilder
 	{
-		void AddRule(Rule rule);
+		void AddRuleFactory(IRuleFactory ruleFactory);
 	}
 }

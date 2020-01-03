@@ -2,14 +2,12 @@
 {
 	public class MinLengthRule : MemberRule
 	{
-		public readonly ulong Min;
+		public ulong Min { get; set; }
 
-		public MinLengthRule(ulong min, string errorCode, string errorMessageFormat)
-			: base(
-					errorCode: errorCode ?? "MinLength",
-					errorMessageFormat: errorMessageFormat ?? "Min length {0}")
+		public MinLengthRule()
 		{
-			Min = min;
+			ErrorCode = "MinLength";
+			ErrorMessageFormat = "Minimum length {0}";
 		}
 
 		public override string GetErrorMessage() => string.Format(ErrorMessageFormat, Min);

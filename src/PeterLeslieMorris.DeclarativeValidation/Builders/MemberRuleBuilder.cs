@@ -16,9 +16,9 @@ namespace PeterLeslieMorris.DeclarativeValidation.Builders
 			Member = member.GetPath();
 		}
 
-		public void AddRule(Rule rule)
+		public void AddRuleFactory(IRuleFactory ruleFactory)
 		{
-			Parent.AddRule(rule);
+			Parent.AddRuleFactory(ruleFactory);
 		}
 	}
 }

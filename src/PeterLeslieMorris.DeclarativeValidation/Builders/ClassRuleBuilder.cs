@@ -7,10 +7,9 @@ namespace PeterLeslieMorris.DeclarativeValidation.Builders
 	internal sealed class ClassRuleBuilder<TClass> : IClassRuleBuilder<TClass>
 		where TClass : class
 	{
-		private readonly List<Rule> Rules = new List<Rule>();
+		private readonly List<IRuleFactory> RuleFactories = new List<IRuleFactory>();
 
 		internal ClassRuleBuilder() { }
-
 
 		public IClassRuleBuilder<TClass> ForMember<TProperty>(
 			Expression<Func<TClass, TProperty>> member,
@@ -31,12 +30,12 @@ namespace PeterLeslieMorris.DeclarativeValidation.Builders
 			return this;
 		}
 
-		public void AddRule(Rule rule)
+		public void AddRuleFactory(IRuleFactory ruleFactory)
 		{
-			if (rule == null)
-				throw new ArgumentNullException(nameof(rule));
+			if (ruleFactory == null)
+				throw new ArgumentNullException(nameof(ruleFactory));
 
-			Rules.Add(rule);
+			RuleFactories.Add(ruleFactory);
 		}
 	}
 }
