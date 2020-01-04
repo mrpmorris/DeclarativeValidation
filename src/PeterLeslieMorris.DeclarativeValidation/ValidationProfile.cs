@@ -18,7 +18,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			validation(ruleBuilder);
 		}
 
-		public IEnumerable<KeyValuePair<Type, ClassRuleFactory>> CreateRuleFactories()
+		internal IEnumerable<KeyValuePair<Type, ClassRuleFactory>> CreateRuleFactories()
 			=> ClassRuleBuilders.Select(x => new KeyValuePair<Type, ClassRuleFactory>(x.ClassType, x.CreateRuleFactory()));
 	}
 }

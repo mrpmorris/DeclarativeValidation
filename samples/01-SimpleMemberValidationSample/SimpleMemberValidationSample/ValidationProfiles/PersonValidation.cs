@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using PeterLeslieMorris.DeclarativeValidation;
 using SimpleMemberValidationSample.Domain;
 
@@ -20,6 +22,9 @@ namespace SimpleMemberValidationSample.ValidationProfiles
 					.ForMember(c => c.DateOfBirth, v => v.NotLessThan(c => c.DateOfDeath))
 					.ForMember(c => c.Name, v => v.EqualTo(c => c.HomeAddress.Country.Code))
 				)
+			);
+			ForClass<Person>(x => x
+				.ForMember(c => c.DateOfBirth, v => v.GreaterThan(DateTime.Parse("2001-01-01"), errorCode: "A", errorMessageFormat: "B"))
 			);
 			var ruleFactories = CreateRuleFactories().ToList();
 		}
