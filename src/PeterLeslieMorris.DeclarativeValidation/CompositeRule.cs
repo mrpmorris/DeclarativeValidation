@@ -4,11 +4,11 @@ namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public class CompositeRule : Rule
 	{
-		private readonly List<Rule> Rules = new List<Rule>();
+		private readonly List<Rule> Rules;
 
-		public void AddRule(Rule rule)
+		public CompositeRule(IEnumerable<Rule> rules)
 		{
-			Rules.Add(rule);
+			Rules = new List<Rule>(rules);
 		}
 
 		public override string ToJson() => "";

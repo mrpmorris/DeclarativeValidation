@@ -8,6 +8,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Builders
 	public abstract class ClassRuleBuilder : RuleBuilder
 	{
 		internal abstract Type ClassType { get; }
+		internal abstract ClassRuleFactory CreateRuleFactory();
 	}
 
 	public sealed class ClassRuleBuilder<TClass> : ClassRuleBuilder
@@ -44,6 +45,6 @@ namespace PeterLeslieMorris.DeclarativeValidation.Builders
 			RuleFactories.Add(ruleFactory);
 		}
 
-		internal ClassRuleFactory CreateRuleFactory() => new ClassRuleFactory(RuleFactories);
+		internal override ClassRuleFactory CreateRuleFactory() => new ClassRuleFactory(RuleFactories);
 	}
 }

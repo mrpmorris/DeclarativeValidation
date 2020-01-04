@@ -1,4 +1,5 @@
-﻿using PeterLeslieMorris.DeclarativeValidation;
+﻿using System.Linq;
+using PeterLeslieMorris.DeclarativeValidation;
 using SimpleMemberValidationSample.Domain;
 
 namespace SimpleMemberValidationSample.ValidationProfiles
@@ -20,6 +21,7 @@ namespace SimpleMemberValidationSample.ValidationProfiles
 					.ForMember(c => c.Name, v => v.EqualTo(c => c.HomeAddress.Country.Code))
 				)
 			);
+			var ruleFactories = CreateRuleFactories().ToList();
 		}
 	}
 }

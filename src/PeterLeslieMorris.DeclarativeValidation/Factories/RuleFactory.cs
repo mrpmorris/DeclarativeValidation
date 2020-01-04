@@ -12,15 +12,13 @@ namespace PeterLeslieMorris.DeclarativeValidation.Factories
 			InitializeRuleProperties = initializeRuleProperties;
 		}
 
-		public TRule Create(IServiceProvider serviceProvider, CompositeRule parent)
+		Rule IRuleFactory.Create(IServiceProvider serviceProvider) => Create(serviceProvider);
+
+		public TRule Create(IServiceProvider serviceProvider)
 		{
 			var rule = (TRule)serviceProvider.GetService(typeof(TRule));
 			InitializeRuleProperties?.Invoke(rule);
-			parent.AddRule(rule);
 			return rule;
 		}
-
-		Rule IRuleFactory.Create(IServiceProvider serviceProvider, CompositeRule parent)
-			=> Create(serviceProvider, parent);
 	}
 }
