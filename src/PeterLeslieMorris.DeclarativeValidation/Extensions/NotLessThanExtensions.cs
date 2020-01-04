@@ -6,8 +6,8 @@ namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public static class NotLessThanExtensions
 	{
-		public static IMemberRuleBuilder<TClass, TProperty> NotLessThan<TClass, TProperty>(
-				this IMemberRuleBuilder<TClass, TProperty> builder,
+		public static MemberRuleBuilder<TClass, TProperty> NotLessThan<TClass, TProperty>(
+				this MemberRuleBuilder<TClass, TProperty> builder,
 				TProperty value,
 				string errorCode = null,
 				string errorMessageFormat = null
@@ -18,8 +18,8 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			return builder;
 		}
 
-		public static IMemberRuleBuilder<TClass, TProperty> NotLessThan<TClass, TProperty, TOtherProperty>(
-				this IMemberRuleBuilder<TClass, TProperty> builder,
+		public static MemberRuleBuilder<TClass, TProperty> NotLessThan<TClass, TProperty, TOtherProperty>(
+				this MemberRuleBuilder<TClass, TProperty> builder,
 				Expression<Func<TClass, TOtherProperty>> other,
 				string errorCode = null,
 				string errorMessageFormat = null
@@ -30,8 +30,8 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			return builder;
 		}
 
-		public static IMemberRuleBuilder<TClass, TProperty> NotLessThan<TClass, TProperty, TOtherProperty>(
-				this IMemberRuleBuilder<TClass, TProperty> builder,
+		public static MemberRuleBuilder<TClass, TProperty> NotLessThan<TClass, TProperty, TOtherProperty>(
+				this MemberRuleBuilder<TClass, TProperty> builder,
 				Expression<Func<TClass, TOtherProperty?>> other,
 				string errorCode = null,
 				string errorMessageFormat = null

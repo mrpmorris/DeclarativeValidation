@@ -7,8 +7,8 @@ namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public static class MinLengthExtensions
 	{
-		public static IMemberRuleBuilder<TClass, TProperty> MinLength<TClass, TProperty>(
-				this IMemberRuleBuilder<TClass, TProperty> builder,
+		public static MemberRuleBuilder<TClass, TProperty> MinLength<TClass, TProperty>(
+				this MemberRuleBuilder<TClass, TProperty> builder,
 				ulong min,
 				string errorCode = null,
 				string errorMessageFormat = null

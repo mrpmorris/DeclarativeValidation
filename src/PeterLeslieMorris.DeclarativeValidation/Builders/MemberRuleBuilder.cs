@@ -4,20 +4,23 @@ using PeterLeslieMorris.DeclarativeValidation.Factories;
 
 namespace PeterLeslieMorris.DeclarativeValidation.Builders
 {
-	internal class MemberRuleBuilder<TClass, TProperty> : IMemberRuleBuilder<TClass, TProperty>
+	public abstract class MemberRuleBuilder : RuleBuilder
+	{
+		internal string Member { get; set; }
+	}
+
+	public class MemberRuleBuilder<TClass, TProperty> : MemberRuleBuilder
 		where TClass : class
 	{
-		private readonly IRuleBuilder Parent;
+		private readonly RuleBuilder Parent;
 
-		public string Member { get; }
-
-		internal MemberRuleBuilder(IRuleBuilder parent, Expression<Func<TClass, TProperty>> member)
+		internal MemberRuleBuilder(RuleBuilder parent, Expression<Func<TClass, TProperty>> member)
 		{
 			Parent = parent;
 			Member = member.GetPath();
 		}
 
-		public void AddRuleFactory(IRuleFactory ruleFactory)
+		internal override void AddRuleFactory(IRuleFactory ruleFactory)
 		{
 			Parent.AddRuleFactory(ruleFactory);
 		}

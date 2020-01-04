@@ -6,11 +6,11 @@ namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public static class WhenAllExtensions
 	{
-		public static IClassRuleBuilder<TClass> WhenAll<TClass, TProperty>(
-				this IClassRuleBuilder<TClass> builder,
+		public static ClassRuleBuilder<TClass> WhenAll<TClass, TProperty>(
+				this ClassRuleBuilder<TClass> builder,
 				Expression<Func<TClass, TProperty>> member,
-				Action<IMemberRuleBuilder<TClass, TProperty>> condition,
-				Action<IClassRuleBuilder<TClass>> ruleBuilder
+				Action<MemberRuleBuilder<TClass, TProperty>> condition,
+				Action<ClassRuleBuilder<TClass>> ruleBuilder
 			)
 			where TClass : class
 		{

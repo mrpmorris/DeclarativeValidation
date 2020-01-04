@@ -7,8 +7,8 @@ namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public static class MaxLengthExtensions
 	{
-		public static IMemberRuleBuilder<TClass, TProperty> MaxLength<TClass, TProperty>(
-				this IMemberRuleBuilder<TClass, TProperty> builder,
+		public static MemberRuleBuilder<TClass, TProperty> MaxLength<TClass, TProperty>(
+				this MemberRuleBuilder<TClass, TProperty> builder,
 				ulong max,
 				string errorCode = null,
 				string errorMessageFormat = null

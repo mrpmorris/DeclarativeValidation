@@ -9,9 +9,9 @@ namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public class ValidationProfile
 	{
-		private readonly List<IClassRuleBuilder> RuleBuilders = new List<IClassRuleBuilder>();
+		private readonly List<ClassRuleBuilder> RuleBuilders = new List<ClassRuleBuilder>();
 
-		public void ForClass<TClass>(Action<IClassRuleBuilder<TClass>> validation)
+		public void ForClass<TClass>(Action<ClassRuleBuilder<TClass>> validation)
 			where TClass : class
 		{
 			var ruleBuilder = new ClassRuleBuilder<TClass>();

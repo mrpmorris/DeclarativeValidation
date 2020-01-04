@@ -4,8 +4,8 @@ namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public static class NotNullExtensions
 	{
-		public static IMemberRuleBuilder<TClass, TProperty> NotNull<TClass, TProperty>(
-				this IMemberRuleBuilder<TClass, TProperty> builder,
+		public static MemberRuleBuilder<TClass, TProperty> NotNull<TClass, TProperty>(
+				this MemberRuleBuilder<TClass, TProperty> builder,
 				string errorCode = null,
 				string errorMessage = null
 			)
@@ -15,8 +15,8 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			return builder;
 		}
 
-		public static IMemberRuleBuilder<TClass, TProperty?> NotNull<TClass, TProperty>(
-				this IMemberRuleBuilder<TClass, TProperty?> builder,
+		public static MemberRuleBuilder<TClass, TProperty?> NotNull<TClass, TProperty>(
+				this MemberRuleBuilder<TClass, TProperty?> builder,
 				string errorCode = null,
 				string errorMessage = null
 			)

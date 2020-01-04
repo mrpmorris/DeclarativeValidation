@@ -2,8 +2,8 @@
 
 namespace PeterLeslieMorris.DeclarativeValidation.Builders
 {
-	public interface IRuleBuilder
+	public abstract class RuleBuilder
 	{
-		void AddRuleFactory(IRuleFactory ruleFactory);
+		internal abstract void AddRuleFactory(IRuleFactory ruleFactory);
 	}
 }
