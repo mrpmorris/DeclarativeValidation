@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using PeterLeslieMorris.DeclarativeValidation.Builders;
+using PeterLeslieMorris.DeclarativeValidation.RuleBuilders;
 using PeterLeslieMorris.DeclarativeValidation.Factories;
 
 namespace PeterLeslieMorris.DeclarativeValidation

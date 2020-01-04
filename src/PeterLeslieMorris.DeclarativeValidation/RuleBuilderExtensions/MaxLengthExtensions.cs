@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using PeterLeslieMorris.DeclarativeValidation.Builders;
+using PeterLeslieMorris.DeclarativeValidation.RuleBuilders;
 using PeterLeslieMorris.DeclarativeValidation.Factories;
 using PeterLeslieMorris.DeclarativeValidation.Rules;
 

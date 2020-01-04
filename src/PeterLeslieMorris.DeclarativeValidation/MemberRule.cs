@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PeterLeslieMorris.DeclarativeValidation
+﻿namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public abstract class MemberRule : Rule
 	{

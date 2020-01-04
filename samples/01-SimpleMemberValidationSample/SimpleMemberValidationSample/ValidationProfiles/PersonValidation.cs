@@ -26,7 +26,6 @@ namespace SimpleMemberValidationSample.ValidationProfiles
 			ForClass<Person>(x => x
 				.ForMember(c => c.DateOfBirth, v => v.GreaterThan(DateTime.Parse("2001-01-01"), errorCode: "A", errorMessageFormat: "B"))
 			);
-			var ruleFactories = CreateRuleFactories().ToList();
 		}
 	}
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using PeterLeslieMorris.DeclarativeValidation.Factories;
 
-namespace PeterLeslieMorris.DeclarativeValidation.Builders
+namespace PeterLeslieMorris.DeclarativeValidation.RuleBuilders
 {
 	public abstract class ClassRuleBuilder : RuleBuilder
 	{

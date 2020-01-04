@@ -1,6 +1,6 @@
 ﻿using PeterLeslieMorris.DeclarativeValidation.Factories;
 
-namespace PeterLeslieMorris.DeclarativeValidation.Builders
+namespace PeterLeslieMorris.DeclarativeValidation.RuleBuilders
 {
 	public abstract class RuleBuilder
 	{
