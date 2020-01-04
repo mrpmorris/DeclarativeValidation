@@ -24,7 +24,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Extensions
 				.SelectMany(x => x.ExportedTypes)
 				.Where(x => !x.IsAbstract)
 				.Where(x => typeof(Rule).IsAssignableFrom(x))
-				.Select(x => services.AddScoped(x))
+				.Select(x => services.AddTransient(x))
 				.ToList();
 
 			IEnumerable<KeyValuePair<Type, ClassRuleFactory>> ruleFactories = assembliesToScan
