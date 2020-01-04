@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using PeterLeslieMorris.DeclarativeValidation.RuleBuilders;
-using PeterLeslieMorris.DeclarativeValidation.Factories;
+using PeterLeslieMorris.DeclarativeValidation.RuleFactories;
 using PeterLeslieMorris.DeclarativeValidation.Rules;
 
 namespace PeterLeslieMorris.DeclarativeValidation

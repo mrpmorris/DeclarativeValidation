@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PeterLeslieMorris.DeclarativeValidation.Factories
+namespace PeterLeslieMorris.DeclarativeValidation.RuleFactories
 {
 	public class ClassRuleFactory : IRuleFactory
 	{

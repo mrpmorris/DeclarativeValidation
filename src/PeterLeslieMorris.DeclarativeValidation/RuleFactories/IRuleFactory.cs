@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PeterLeslieMorris.DeclarativeValidation.Factories
+namespace PeterLeslieMorris.DeclarativeValidation.RuleFactories
 {
 	public interface IRuleFactory
 	{
