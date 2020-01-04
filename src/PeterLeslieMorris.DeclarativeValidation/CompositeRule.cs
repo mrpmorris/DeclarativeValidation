@@ -2,7 +2,7 @@
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	public abstract class CompositeRule : Rule
+	public class CompositeRule : Rule
 	{
 		private readonly List<Rule> Rules = new List<Rule>();
 
@@ -10,5 +10,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 		{
 			Rules.Add(rule);
 		}
+
+		public override string ToJson() => "";
 	}
 }

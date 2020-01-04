@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using PeterLeslieMorris.DeclarativeValidation.Factories;
 
 namespace PeterLeslieMorris.DeclarativeValidation.Builders
 {
@@ -10,6 +11,15 @@ namespace PeterLeslieMorris.DeclarativeValidation.Builders
 		private readonly List<IRuleFactory> RuleFactories = new List<IRuleFactory>();
 
 		internal ClassRuleBuilder() { }
+
+		public Type ClassType { get => typeof(TClass); }
+
+		public void AddRuleFactory(IRuleFactory ruleFactory)
+		{
+			RuleFactories.Add(ruleFactory);
+		}
+
+		public ClassRuleFactory CreateRuleFactory() => new ClassRuleFactory(RuleFactories);
 
 		public IClassRuleBuilder<TClass> ForMember<TProperty>(
 			Expression<Func<TClass, TProperty>> member,
@@ -28,14 +38,6 @@ namespace PeterLeslieMorris.DeclarativeValidation.Builders
 			var memberRuleBuilder = new MemberRuleBuilder<TClass, TProperty?>(this, member);
 			validation(memberRuleBuilder);
 			return this;
-		}
-
-		public void AddRuleFactory(IRuleFactory ruleFactory)
-		{
-			if (ruleFactory == null)
-				throw new ArgumentNullException(nameof(ruleFactory));
-
-			RuleFactories.Add(ruleFactory);
 		}
 	}
 }

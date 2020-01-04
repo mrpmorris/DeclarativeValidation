@@ -1,4 +1,6 @@
-﻿namespace PeterLeslieMorris.DeclarativeValidation.Builders
+﻿using PeterLeslieMorris.DeclarativeValidation.Factories;
+
+namespace PeterLeslieMorris.DeclarativeValidation.Builders
 {
 	public interface IRuleBuilder
 	{

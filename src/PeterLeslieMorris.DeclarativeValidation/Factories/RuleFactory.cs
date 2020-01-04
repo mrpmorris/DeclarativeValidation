@@ -1,12 +1,7 @@
 ﻿using System;
 
-namespace PeterLeslieMorris.DeclarativeValidation.Builders
+namespace PeterLeslieMorris.DeclarativeValidation.Factories
 {
-	public interface IRuleFactory
-	{
-		Rule Create(IServiceProvider serviceProvider, CompositeRule parent);
-	}
-
 	public class RuleFactory<TRule> : IRuleFactory
 		where TRule : Rule
 	{
@@ -21,6 +16,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Builders
 		{
 			var rule = (TRule)serviceProvider.GetService(typeof(TRule));
 			InitializeRuleProperties?.Invoke(rule);
+			parent.AddRule(rule);
 			return rule;
 		}
 

@@ -5,6 +5,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Builders
 {
 	public interface IClassRuleBuilder : IRuleBuilder
 	{
+		Type ClassType { get; }
 	}
 
 	public interface IClassRuleBuilder<TClass> : IClassRuleBuilder
