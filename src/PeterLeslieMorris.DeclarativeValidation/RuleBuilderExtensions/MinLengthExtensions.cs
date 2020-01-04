@@ -21,7 +21,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 				x.ErrorCode = errorCode ?? x.ErrorCode;
 				x.ErrorMessageFormat = errorMessageFormat ?? x.ErrorMessageFormat;
 			});
-			builder.AddRuleFactory(factory);
+			builder.InternalAddRuleFactory(factory);
 			return builder;
 		}
 	}

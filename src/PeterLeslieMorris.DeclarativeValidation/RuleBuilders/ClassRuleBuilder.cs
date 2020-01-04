@@ -40,7 +40,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.RuleBuilders
 		// Internal
 		internal override Type ClassType { get => typeof(TClass); }
 
-		internal override void AddRuleFactory(IRuleFactory ruleFactory)
+		internal override void InternalAddRuleFactory(IRuleFactory ruleFactory)
 		{
 			RuleFactories.Add(ruleFactory);
 		}

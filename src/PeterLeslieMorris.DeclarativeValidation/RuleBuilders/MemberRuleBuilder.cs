@@ -20,9 +20,9 @@ namespace PeterLeslieMorris.DeclarativeValidation.RuleBuilders
 			Member = member.GetPath();
 		}
 
-		internal override void AddRuleFactory(IRuleFactory ruleFactory)
+		internal override void InternalAddRuleFactory(IRuleFactory ruleFactory)
 		{
-			Parent.AddRuleFactory(ruleFactory);
+			Parent.InternalAddRuleFactory(ruleFactory);
 		}
 	}
 }

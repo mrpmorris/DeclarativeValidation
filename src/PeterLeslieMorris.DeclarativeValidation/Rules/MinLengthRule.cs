@@ -1,4 +1,6 @@
-﻿namespace PeterLeslieMorris.DeclarativeValidation.Rules
+﻿using System.Collections.Generic;
+
+namespace PeterLeslieMorris.DeclarativeValidation.Rules
 {
 	public class MinLengthRule : MemberRule
 	{
@@ -15,6 +17,11 @@
 		public override string ToJson()
 		{
 			return "";
+		}
+
+		public async override IAsyncEnumerable<RuleViolation> Validate(object instance)
+		{
+			yield break;
 		}
 	}
 }

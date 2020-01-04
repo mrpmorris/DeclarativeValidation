@@ -7,5 +7,6 @@ namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public class RuleViolation
 	{
+		public string ErrorMessage { get; set; }
 	}
 }

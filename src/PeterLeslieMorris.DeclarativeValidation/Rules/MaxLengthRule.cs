@@ -1,4 +1,7 @@
-﻿namespace PeterLeslieMorris.DeclarativeValidation.Rules
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace PeterLeslieMorris.DeclarativeValidation.Rules
 {
 	public class MaxLengthRule : MemberRule
 	{
@@ -15,6 +18,11 @@
 		public override string ToJson()
 		{
 			return "";
+		}
+
+		public async override IAsyncEnumerable<RuleViolation> Validate(object instance)
+		{
+			yield break;
 		}
 	}
 }

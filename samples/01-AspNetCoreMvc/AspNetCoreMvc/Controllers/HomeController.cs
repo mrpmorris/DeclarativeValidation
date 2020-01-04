@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -12,12 +9,12 @@ namespace AspNetCoreMvc.Controllers
 {
 	public class HomeController : Controller
 	{
-		private readonly ILogger<HomeController> _logger;
+		private readonly ILogger<HomeController> Logger;
 		private readonly IValidationService ValidationService;
 
 		public HomeController(ILogger<HomeController> logger, IValidationService validationService)
 		{
-			_logger = logger;
+			Logger = logger;
 			ValidationService = validationService;
 		}
 
@@ -25,7 +22,7 @@ namespace AspNetCoreMvc.Controllers
 		{
 			var person = new Person();
 			await foreach(RuleViolation ruleViolation in ValidationService.Validate(person)) {
-				ModelState.AddModelError("X", "Y");
+				ModelState.AddModelError("X", ruleViolation.ErrorMessage);
 			}
 			return View();
 		}

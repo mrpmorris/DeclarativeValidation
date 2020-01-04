@@ -16,15 +16,26 @@ namespace PeterLeslieMorris.DeclarativeValidation.Extensions
 		{
 			otherAssembliesToScan = otherAssembliesToScan ?? Array.Empty<Assembly>();
 
-			IEnumerable<Assembly> assembliesToScan = new List<Assembly> { assemblyToScan }.Union(otherAssembliesToScan);
+			IEnumerable<Assembly> assembliesToScan = 
+				new List<Assembly> { assemblyToScan, typeof(Rule).Assembly }
+				.Union(otherAssembliesToScan);
+
+			assembliesToScan
+				.SelectMany(x => x.ExportedTypes)
+				.Where(x => !x.IsAbstract)
+				.Where(x => typeof(Rule).IsAssignableFrom(x))
+				.Select(x => services.AddScoped(x))
+				.ToList();
+
 			IEnumerable<KeyValuePair<Type, ClassRuleFactory>> ruleFactories = assembliesToScan
 				.SelectMany(x => x.ExportedTypes)
 				.Where(x => !x.IsAbstract)
 				.Where(x => typeof(ValidationProfile).IsAssignableFrom(x))
 				.Select(x => (ValidationProfile)Activator.CreateInstance(x))
-				.SelectMany(x => x.CreateRuleFactories());
+				.SelectMany(x => x.CreateRuleFactories())
+				.ToList();
 
-			services.AddScoped<IValidationService>(sp => new ValidationService(ruleFactories));
+			services.AddScoped<IValidationService>(sp => new ValidationService(sp, ruleFactories));
 
 			return services;
 		}
