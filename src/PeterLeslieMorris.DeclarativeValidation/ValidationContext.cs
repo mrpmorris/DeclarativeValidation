@@ -30,7 +30,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 
 		public Task<IEnumerable<RuleViolation>> GetRuleViolationsAsync() => TaskCompletionSource.Task;
 
-		public void AddRuleViolations(string memberPath, IEnumerable<RuleViolation> violations)
+		public void AddRuleViolation(params RuleViolation[] violations)
 		{
 			EnsureNotCompleted();
 		}
@@ -47,7 +47,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			else
 			{
 				foreach (ClassRuleFactory factory in factories)
-					factory.Create(serviceProvider).Validate(Subject);
+					factory.Create(serviceProvider).ValidateAsync(this);
 			}
 		}
 

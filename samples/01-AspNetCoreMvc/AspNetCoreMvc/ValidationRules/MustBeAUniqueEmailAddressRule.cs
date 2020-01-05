@@ -22,13 +22,10 @@ namespace AspNetCoreMvc.ValidationRules
 		public override string GetErrorMessage() => ErrorMessageFormat;
 		public override string ToJson() => "";
 
-		public async override IAsyncEnumerable<RuleViolation> Validate(object instance)
+		public async override Task ValidateAsync(ValidationContext context)
 		{
 			await Task.Delay(1000);
-			yield return new RuleViolation
-			{
-				ErrorMessage = GetErrorMessage()
-			};
+			context.AddRuleViolation(ToRuleViolation());
 		}
 	}
 

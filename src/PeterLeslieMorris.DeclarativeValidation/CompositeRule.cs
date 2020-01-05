@@ -14,15 +14,11 @@ namespace PeterLeslieMorris.DeclarativeValidation
 
 		public override string ToJson() => "";
 
-		public async override IAsyncEnumerable<RuleViolation> Validate(object instance)
+		public async override Task ValidateAsync(ValidationContext context)
 		{
 			foreach (Rule rule in Rules)
 			{
-				await foreach (RuleViolation ruleViolation in rule.Validate(instance))
-				{
-					yield return ruleViolation;
-					yield break;
-				}
+				await rule.ValidateAsync(context);
 			}
 		}
 	}

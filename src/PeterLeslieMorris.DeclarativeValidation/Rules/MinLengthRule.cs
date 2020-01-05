@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
 
 namespace PeterLeslieMorris.DeclarativeValidation.Rules
 {
@@ -19,9 +19,10 @@ namespace PeterLeslieMorris.DeclarativeValidation.Rules
 			return "";
 		}
 
-		public async override IAsyncEnumerable<RuleViolation> Validate(object instance)
+		public override Task ValidateAsync(ValidationContext context)
 		{
-			yield break;
+			context.AddRuleViolation(ToRuleViolation());
+			return Task.CompletedTask;
 		}
 	}
 }

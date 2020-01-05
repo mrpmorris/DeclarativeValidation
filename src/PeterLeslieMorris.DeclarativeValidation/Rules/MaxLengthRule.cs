@@ -20,9 +20,9 @@ namespace PeterLeslieMorris.DeclarativeValidation.Rules
 			return "";
 		}
 
-		public async override IAsyncEnumerable<RuleViolation> Validate(object instance)
+		public override Task ValidateAsync(ValidationContext context)
 		{
-			yield break;
+			return Task.CompletedTask;
 		}
 	}
 }
