@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AspNetCoreMvc.Models;
 using PeterLeslieMorris.DeclarativeValidation;
+using System.Collections.Generic;
 
 namespace AspNetCoreMvc.Controllers
 {
@@ -18,10 +19,15 @@ namespace AspNetCoreMvc.Controllers
 			ValidationService = validationService;
 		}
 
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
 			var person = new Person();
-			var validationContext = ValidationService.Validate(person);
+			var validationContext = ValidationService.Validate(this);
+			validationContext.MemberValidationStarted += (_, m) => Debug.WriteLine("Started validation for " + m);
+			validationContext.MemberValidationEnded += (_, m) => Debug.WriteLine("Ended validation for " + m);
+			validationContext.AllValidationsEnded += (_, m) => Debug.WriteLine("All validation complete");
+
+			IEnumerable<RuleViolation> ruleViolations = await validationContext.GetRuleViolationsAsync();
 			return View();
 		}
 

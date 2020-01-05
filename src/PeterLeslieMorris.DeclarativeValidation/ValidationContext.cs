@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using PeterLeslieMorris.DeclarativeValidation.RuleFactories;
 
 namespace PeterLeslieMorris.DeclarativeValidation
@@ -16,26 +16,39 @@ namespace PeterLeslieMorris.DeclarativeValidation
 		public event EventHandler AllValidationsEnded;
 
 		private volatile bool IsCompleted;
+		private TaskCompletionSource<IEnumerable<RuleViolation>> TaskCompletionSource;
 		private readonly ConcurrentDictionary<string, ValidationStatus> OutstandingEvaluations;
 
 		// TODO - Add a task completion source to constrcu
 		
 		internal ValidationContext(object subject)
 		{
-			Subject = subject ?? throw new ArgumentNullException(nameof(subject));
+			Subject = subject;
 			OutstandingEvaluations = new ConcurrentDictionary<string, ValidationStatus>();
+			TaskCompletionSource = new TaskCompletionSource<IEnumerable<RuleViolation>>();
 		}
+
+		public Task<IEnumerable<RuleViolation>> GetRuleViolationsAsync() => TaskCompletionSource.Task;
 
 		public void AddRuleViolations(string memberPath, IEnumerable<RuleViolation> violations)
 		{
 			EnsureNotCompleted();
 		}
 
+		// TODO - Add ability to specify which members are validated
 		internal void Validate(IServiceProvider serviceProvider, IEnumerable<ClassRuleFactory> factories)
 		{
-			// TODO - Add ability to specify which members are validated
-			foreach (ClassRuleFactory factory in factories)
-				factory.Create(serviceProvider).Validate(Subject);
+			if (Subject == null || !factories.Any())
+			{
+				// TODO: This triggers before the consumer can subscribe to any events
+				AllValidationsEnded?.Invoke(this, EventArgs.Empty);
+				TaskCompletionSource.SetResult(Array.Empty<RuleViolation>());
+			}
+			else
+			{
+				foreach (ClassRuleFactory factory in factories)
+					factory.Create(serviceProvider).Validate(Subject);
+			}
 		}
 
 		internal void StartMemberValidation(string memberPath)
@@ -68,7 +81,11 @@ namespace PeterLeslieMorris.DeclarativeValidation
 						MemberValidationEnded?.Invoke(this, memberPath);
 
 					if (PendingValidationsCount == 0)
+					{
+						var allRuleViolations = OutstandingEvaluations.Values.SelectMany(x => x.GetRuleViolations());
+						TaskCompletionSource.SetResult(allRuleViolations);
 						AllValidationsEnded?.Invoke(this, EventArgs.Empty);
+					}
 
 					return status;
 				});
