@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using PeterLeslieMorris.DeclarativeValidation.RuleFactories;
 
 namespace PeterLeslieMorris.DeclarativeValidation
@@ -24,25 +21,27 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			ServiceProvider = serviceProvider;
 		}
 
-		public async IAsyncEnumerable<RuleViolation> Validate(object instance)
+		public ValidationContext Validate(object subject)
 		{
-			if (instance == null)
-				yield break;
-
-			// TODO: Walk the hierarchy
-
-			if (!RuleFactoriesByClass.TryGetValue(instance.GetType(), out IEnumerable<ClassRuleFactory> factories))
-				yield break;
-
-			foreach(ClassRuleFactory classRuleFactory in factories)
-			{
-				Rule rule = classRuleFactory.Create(ServiceProvider);
-				await foreach(RuleViolation ruleViolation in rule.Validate(instance))
-				{
-					yield return ruleViolation;
-				}
-			}
+			var context = new ValidationContext(subject);
+			Validate(context);
+			return context;
 		}
 
+		public void Validate(ValidationContext context)
+		{
+			if (context == null)
+				throw new NotImplementedException(nameof(context));
+
+			object subject = context.Subject;
+
+
+			// TODO: Walk the type hierarchy
+
+			if (!RuleFactoriesByClass.TryGetValue(subject.GetType(), out IEnumerable<ClassRuleFactory> factories))
+				factories = Array.Empty<ClassRuleFactory>();
+
+			context.Validate(ServiceProvider, factories);
+		}
 	}
 }

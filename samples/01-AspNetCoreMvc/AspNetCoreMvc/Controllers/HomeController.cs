@@ -18,12 +18,10 @@ namespace AspNetCoreMvc.Controllers
 			ValidationService = validationService;
 		}
 
-		public async Task<IActionResult> Index()
+		public IActionResult Index()
 		{
 			var person = new Person();
-			await foreach(RuleViolation ruleViolation in ValidationService.Validate(person)) {
-				ModelState.AddModelError("X", ruleViolation.ErrorMessage);
-			}
+			var validationContext = ValidationService.Validate(person);
 			return View();
 		}
 
