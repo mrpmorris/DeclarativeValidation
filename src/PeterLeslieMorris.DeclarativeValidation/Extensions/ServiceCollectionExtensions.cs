@@ -17,13 +17,13 @@ namespace PeterLeslieMorris.DeclarativeValidation.Extensions
 			otherAssembliesToScan = otherAssembliesToScan ?? Array.Empty<Assembly>();
 
 			IEnumerable<Assembly> assembliesToScan = 
-				new List<Assembly> { assemblyToScan, typeof(Rule).Assembly }
+				new List<Assembly> { assemblyToScan, typeof(IRule).Assembly }
 				.Union(otherAssembliesToScan);
 
 			assembliesToScan
 				.SelectMany(x => x.ExportedTypes)
 				.Where(x => !x.IsAbstract)
-				.Where(x => typeof(Rule).IsAssignableFrom(x))
+				.Where(x => typeof(IRule).IsAssignableFrom(x))
 				.Select(x => services.AddTransient(x))
 				.ToList();
 

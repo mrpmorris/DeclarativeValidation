@@ -3,7 +3,7 @@
 namespace PeterLeslieMorris.DeclarativeValidation.RuleFactories
 {
 	public class RuleFactory<TRule> : IRuleFactory
-		where TRule : Rule
+		where TRule : IRule
 	{
 		private readonly Action<TRule> InitializeRuleProperties;
 
@@ -12,7 +12,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.RuleFactories
 			InitializeRuleProperties = initializeRuleProperties;
 		}
 
-		Rule IRuleFactory.Create(IServiceProvider serviceProvider) => Create(serviceProvider);
+		IRule IRuleFactory.Create(IServiceProvider serviceProvider) => Create(serviceProvider);
 
 		public TRule Create(IServiceProvider serviceProvider)
 		{

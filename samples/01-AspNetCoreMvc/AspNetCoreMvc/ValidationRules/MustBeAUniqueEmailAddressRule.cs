@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AspNetCoreMvc.Models;
 using AspNetCoreMvc.Services;
 using PeterLeslieMorris.DeclarativeValidation;
@@ -8,14 +7,15 @@ using PeterLeslieMorris.DeclarativeValidation.RuleFactories;
 
 namespace AspNetCoreMvc.ValidationRules
 {
-	public class MustBeAUniqueEmailAddressRule : MemberRule
+	public class MustBeAUniqueEmailAddressRule : RuleBase
 	{
 		private readonly IPersonRepository PersonRepository;
 
 		public MustBeAUniqueEmailAddressRule(IPersonRepository personRepository)
-		{
-			ErrorCode = "MustBeAUniqueEmailAddress";
-			ErrorMessageFormat = "Must be a unique email address";
+			: base(
+					errorCode: "MustBeAUniqueEmailAddress",
+					errorMessageFormat: "Must be a unique email address")
+		{ 
 			PersonRepository = personRepository;
 		}
 
@@ -25,7 +25,7 @@ namespace AspNetCoreMvc.ValidationRules
 		public async override Task ValidateAsync(ValidationContext context)
 		{
 			await Task.Delay(1000);
-			context.AddRuleViolation(ToRuleViolation());
+			context.AddRuleViolation(CreateRuleViolation());
 		}
 	}
 

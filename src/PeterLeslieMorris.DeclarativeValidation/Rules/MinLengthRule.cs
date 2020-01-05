@@ -2,14 +2,15 @@
 
 namespace PeterLeslieMorris.DeclarativeValidation.Rules
 {
-	public class MinLengthRule : MemberRule
+	public class MinLengthRule : RuleBase
 	{
 		public ulong Min { get; set; }
 
-		public MinLengthRule()
+		public MinLengthRule(string errorCode, string errorMessageFormat)
+			: base(
+					errorCode: errorCode ?? "MinLength",
+					errorMessageFormat: errorMessageFormat ?? "Minimum length {0}")
 		{
-			ErrorCode = "MinLength";
-			ErrorMessageFormat = "Minimum length {0}";
 		}
 
 		public override string GetErrorMessage() => string.Format(ErrorMessageFormat, Min);
@@ -21,7 +22,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Rules
 
 		public override Task ValidateAsync(ValidationContext context)
 		{
-			context.AddRuleViolation(ToRuleViolation());
+			context.AddRuleViolation(CreateRuleViolation());
 			return Task.CompletedTask;
 		}
 	}

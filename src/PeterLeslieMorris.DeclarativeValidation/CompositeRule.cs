@@ -3,20 +3,20 @@ using System.Threading.Tasks;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	public class CompositeRule : Rule
+	public class CompositeRule : IRule
 	{
-		private readonly List<Rule> Rules;
+		private readonly List<IRule> Rules;
 
-		public CompositeRule(IEnumerable<Rule> rules)
+		public CompositeRule(IEnumerable<IRule> rules)
 		{
-			Rules = new List<Rule>(rules);
+			Rules = new List<IRule>(rules);
 		}
 
-		public override string ToJson() => "";
+		public string ToJson() => "";
 
-		public async override Task ValidateAsync(ValidationContext context)
+		public async Task ValidateAsync(ValidationContext context)
 		{
-			foreach (Rule rule in Rules)
+			foreach (IRule rule in Rules)
 			{
 				await rule.ValidateAsync(context);
 			}

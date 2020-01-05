@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace PeterLeslieMorris.DeclarativeValidation.Rules
 {
-	public class MaxLengthRule : MemberRule
+	public class MaxLengthRule : RuleBase
 	{
 		public ulong Max { get; set; }
 
-		public MaxLengthRule()
+		public MaxLengthRule(string errorCode, string errorMessageFormat)
+			: base(
+					errorCode: errorCode ?? "MaxLength",
+					errorMessageFormat: errorMessageFormat ?? "Maximum length {0}")
 		{
-			ErrorCode = "MaxLength";
-			ErrorMessageFormat = "Maximum length {0}";
 		}
 
 		public override string GetErrorMessage() => string.Format(ErrorMessageFormat, Max);

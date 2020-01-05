@@ -13,7 +13,8 @@ namespace PeterLeslieMorris.DeclarativeValidation.RuleFactories
 			RuleFactories = ruleFactories.ToList();
 		}
 
-		public Rule Create(IServiceProvider serviceProvider)
+		//TODO: Create a class rule that will process all rules in parallel
+		public IRule Create(IServiceProvider serviceProvider)
 			=> new CompositeRule(RuleFactories.Select(x => x.Create(serviceProvider)));
 	}
 }
