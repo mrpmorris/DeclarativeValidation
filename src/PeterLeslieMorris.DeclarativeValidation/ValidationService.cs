@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using PeterLeslieMorris.DeclarativeValidation.RuleFactories;
 
 namespace PeterLeslieMorris.DeclarativeValidation
@@ -21,14 +22,13 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			ServiceProvider = serviceProvider;
 		}
 
-		public ValidationContext Validate(object subject)
+		public Task<IEnumerable<RuleViolation>> ValidateAsync(object subject)
 		{
 			var context = new ValidationContext(subject);
-			Validate(context);
-			return context;
+			return ValidateAsync(context);
 		}
 
-		public void Validate(ValidationContext context)
+		public Task<IEnumerable<RuleViolation>> ValidateAsync(ValidationContext context)
 		{
 			if (context == null)
 				throw new NotImplementedException(nameof(context));
@@ -41,7 +41,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			if (!RuleFactoriesByClass.TryGetValue(subject.GetType(), out IEnumerable<ClassRuleFactory> factories))
 				factories = Array.Empty<ClassRuleFactory>();
 
-			context.Validate(ServiceProvider, factories);
+			return context.ValidateAsync(ServiceProvider, factories);
 		}
 	}
 }

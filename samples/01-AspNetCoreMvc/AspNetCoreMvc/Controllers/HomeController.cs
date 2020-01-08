@@ -22,12 +22,12 @@ namespace AspNetCoreMvc.Controllers
 		public async Task<IActionResult> Index()
 		{
 			var person = new Person();
-			var validationContext = ValidationService.Validate(person);
+			var validationContext = new ValidationContext(person);
 			validationContext.MemberValidationStarted += (_, m) => Debug.WriteLine("Started validation for " + m);
 			validationContext.MemberValidationEnded += (_, m) => Debug.WriteLine("Ended validation for " + m);
 			validationContext.AllValidationsEnded += (_, m) => Debug.WriteLine("All validation complete");
 
-			IEnumerable<RuleViolation> ruleViolations = await validationContext.GetRuleViolationsAsync();
+			IEnumerable<RuleViolation> ruleViolations = await ValidationService.ValidateAsync(validationContext);
 			return View();
 		}
 

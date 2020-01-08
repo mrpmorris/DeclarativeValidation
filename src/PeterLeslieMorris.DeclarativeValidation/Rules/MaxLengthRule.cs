@@ -6,10 +6,10 @@ namespace PeterLeslieMorris.DeclarativeValidation.Rules
 	{
 		public ulong Max { get; set; }
 
-		public MaxLengthRule(string errorCode, string errorMessageFormat)
+		public MaxLengthRule()
 			: base(
-					errorCode: errorCode ?? "MaxLength",
-					errorMessageFormat: errorMessageFormat ?? "Maximum length {0}")
+					errorCode: "MaxLength",
+					errorMessageFormat: "Maximum length {0}")
 		{
 		}
 

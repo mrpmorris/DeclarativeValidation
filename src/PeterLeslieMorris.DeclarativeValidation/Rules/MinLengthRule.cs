@@ -6,10 +6,10 @@ namespace PeterLeslieMorris.DeclarativeValidation.Rules
 	{
 		public ulong Min { get; set; }
 
-		public MinLengthRule(string errorCode, string errorMessageFormat)
+		public MinLengthRule()
 			: base(
-					errorCode: errorCode ?? "MinLength",
-					errorMessageFormat: errorMessageFormat ?? "Minimum length {0}")
+					errorCode: "MinLength",
+					errorMessageFormat: "Minimum length {0}")
 		{
 		}
 

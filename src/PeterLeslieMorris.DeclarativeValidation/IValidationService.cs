@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public interface IValidationService
 	{
-		ValidationContext Validate(object subject);
+		Task<IEnumerable<RuleViolation>> ValidateAsync(object subject);
 		//TODO: Make ValidateAsync
-		void Validate(ValidationContext context);
+		Task<IEnumerable<RuleViolation>> ValidateAsync(ValidationContext context);
 	}
 }

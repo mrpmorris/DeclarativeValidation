@@ -21,14 +21,11 @@ namespace PeterLeslieMorris.DeclarativeValidation
 
 		// TODO - Add a task completion source to constrcu
 		
-		internal ValidationContext(object subject)
+		public ValidationContext(object subject)
 		{
 			Subject = subject;
 			OutstandingEvaluations = new ConcurrentDictionary<string, ValidationStatus>();
-			TaskCompletionSource = new TaskCompletionSource<IEnumerable<RuleViolation>>();
 		}
-
-		public Task<IEnumerable<RuleViolation>> GetRuleViolationsAsync() => TaskCompletionSource.Task;
 
 		public void AddRuleViolation(params RuleViolation[] violations)
 		{
@@ -36,19 +33,25 @@ namespace PeterLeslieMorris.DeclarativeValidation
 		}
 
 		// TODO - Add ability to specify which members are validated
-		internal void Validate(IServiceProvider serviceProvider, IEnumerable<ClassRuleFactory> factories)
+		internal Task<IEnumerable<RuleViolation>> ValidateAsync(IServiceProvider serviceProvider, IEnumerable<ClassRuleFactory> factories)
 		{
-			if (Subject == null || !factories.Any())
+			if (TaskCompletionSource == null)
 			{
-				// TODO: This triggers before the consumer can subscribe to any events
-				AllValidationsEnded?.Invoke(this, EventArgs.Empty);
-				TaskCompletionSource.SetResult(Array.Empty<RuleViolation>());
+				TaskCompletionSource = new TaskCompletionSource<IEnumerable<RuleViolation>>();
+
+				if (Subject == null || !factories.Any())
+				{
+					// TODO: This triggers before the consumer can subscribe to any events
+					AllValidationsEnded?.Invoke(this, EventArgs.Empty);
+					TaskCompletionSource.SetResult(Array.Empty<RuleViolation>());
+				}
+				else
+				{
+					foreach (ClassRuleFactory factory in factories)
+						factory.Create(serviceProvider).ValidateAsync(this);
+				}
 			}
-			else
-			{
-				foreach (ClassRuleFactory factory in factories)
-					factory.Create(serviceProvider).ValidateAsync(this);
-			}
+			return TaskCompletionSource.Task;
 		}
 
 		internal void StartMemberValidation(string memberPath)
