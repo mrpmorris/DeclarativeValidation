@@ -13,6 +13,8 @@ namespace PeterLeslieMorris.DeclarativeValidation
 		public abstract string ToJson();
 		public abstract Task ValidateAsync(ValidationContext context);
 
+		protected internal RuleBase() { }
+
 		protected RuleBase(string errorCode, string errorMessageFormat)
 		{
 			ErrorCode = errorCode;
@@ -24,5 +26,18 @@ namespace PeterLeslieMorris.DeclarativeValidation
 				memberPath: MemberPath,
 				errorCode: ErrorCode,
 				errorMessage: GetErrorMessage());
+
+		async Task IRule.ValidateAsync(ValidationContext context)
+		{
+			context.StartMemberValidation(MemberPath);
+			try
+			{
+				await ValidateAsync(context);
+			}
+			finally
+			{
+				context.EndMemberValidation(MemberPath);
+			}
+		}
 	}
 }

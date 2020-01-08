@@ -16,65 +16,84 @@ namespace PeterLeslieMorris.DeclarativeValidation
 		public event EventHandler AllValidationsEnded;
 
 		private volatile bool IsCompleted;
-		private TaskCompletionSource<IEnumerable<RuleViolation>> TaskCompletionSource;
-		private readonly ConcurrentDictionary<string, ValidationStatus> OutstandingEvaluations;
+		private readonly ConcurrentDictionary<string, ValidationStatus> RuleEvaluations;
 
 		// TODO - Add a task completion source to constrcu
-		
+
 		public ValidationContext(object subject)
 		{
 			Subject = subject;
-			OutstandingEvaluations = new ConcurrentDictionary<string, ValidationStatus>();
+			RuleEvaluations = new ConcurrentDictionary<string, ValidationStatus>();
 		}
 
-		public void AddRuleViolation(params RuleViolation[] violations)
+		public void AddRuleViolation(params RuleViolation[] ruleViolations)
 		{
+			if (ruleViolations is null)
+				throw new ArgumentNullException(nameof(ruleViolations));
+
 			EnsureNotCompleted();
+			foreach (RuleViolation ruleViolation in ruleViolations)
+				RuleEvaluations.AddOrUpdate(
+					key: ruleViolation.MemberPath ?? "",
+					addValueFactory: _ =>
+					{
+						var result = new ValidationStatus(ruleViolation.MemberPath);
+						result.AddRuleViolation(ruleViolation);
+						return result;
+					},
+					updateValueFactory: (_, status) =>
+					{
+						status.AddRuleViolation(ruleViolation);
+						return status;
+					});
 		}
 
 		// TODO - Add ability to specify which members are validated
-		internal Task<IEnumerable<RuleViolation>> ValidateAsync(IServiceProvider serviceProvider, IEnumerable<ClassRuleFactory> factories)
+		internal async Task<IEnumerable<RuleViolation>> ValidateAsync(IServiceProvider serviceProvider, IEnumerable<ClassRuleFactory> ruleFactories)
 		{
-			if (TaskCompletionSource == null)
-			{
-				TaskCompletionSource = new TaskCompletionSource<IEnumerable<RuleViolation>>();
+			if (serviceProvider is null)
+				throw new ArgumentNullException(nameof(serviceProvider));
+			if (ruleFactories == null)
+				throw new ArgumentNullException(nameof(ruleFactories));
 
-				if (Subject == null || !factories.Any())
-				{
-					// TODO: This triggers before the consumer can subscribe to any events
-					AllValidationsEnded?.Invoke(this, EventArgs.Empty);
-					TaskCompletionSource.SetResult(Array.Empty<RuleViolation>());
-				}
-				else
-				{
-					foreach (ClassRuleFactory factory in factories)
-						factory.Create(serviceProvider).ValidateAsync(this);
-				}
+			if (Subject != null)
+			{
+				var tasks = ruleFactories
+					.Select(x => x.Create(serviceProvider).ValidateAsync(this));
+				await Task.WhenAll(tasks);
 			}
-			return TaskCompletionSource.Task;
+
+			AllValidationsEnded?.Invoke(this, EventArgs.Empty);
+			return RuleEvaluations.Values.SelectMany(x => x.GetRuleViolations());
 		}
 
 		internal void StartMemberValidation(string memberPath)
 		{
 			EnsureNotCompleted();
 
-			OutstandingEvaluations.AddOrUpdate(
-				key: memberPath,
+			bool memberAdded = false;
+			RuleEvaluations.AddOrUpdate(
+				key: memberPath ?? "",
 				addValueFactory: _ =>
 				{
+					memberAdded = true;
 					PendingValidationsCount++;
-					MemberValidationStarted?.Invoke(this, memberPath);
-					return new ValidationStatus(memberPath);
+					var result = new ValidationStatus(memberPath);
+					result.StartMemberValidation();
+					return result;
 				},
 				updateValueFactory: (_, status) => status.StartMemberValidation());
+
+			if (memberAdded)
+				MemberValidationStarted?.Invoke(this, memberPath);
 		}
 
 		internal void EndMemberValidation(string memberPath)
 		{
 			EnsureNotCompleted();
 
-			OutstandingEvaluations.AddOrUpdate(
-				key: memberPath,
+			RuleEvaluations.AddOrUpdate(
+				key: memberPath ?? "",
 				addValueFactory: _ => throw new InvalidOperationException(ValidationStatus.ThrowEndMemberValidationWithoutStartMemberValidationExceptionMessage),
 				updateValueFactory: (_, status) =>
 				{
@@ -82,13 +101,6 @@ namespace PeterLeslieMorris.DeclarativeValidation
 					PendingValidationsCount--;
 					if (status.PendingValidationsCount == 0)
 						MemberValidationEnded?.Invoke(this, memberPath);
-
-					if (PendingValidationsCount == 0)
-					{
-						var allRuleViolations = OutstandingEvaluations.Values.SelectMany(x => x.GetRuleViolations());
-						TaskCompletionSource.SetResult(allRuleViolations);
-						AllValidationsEnded?.Invoke(this, EventArgs.Empty);
-					}
 
 					return status;
 				});
