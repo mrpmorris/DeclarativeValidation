@@ -13,11 +13,15 @@ namespace PeterLeslieMorris.DeclarativeValidation.RuleBuilders
 		where TClass : class
 	{
 		private readonly RuleBuilder Parent;
+		public readonly Func<TClass, TProperty> GetMemberValueFunc;
+		public readonly Func<object> GetPropertyOwnerFunc;
 
 		internal MemberRuleBuilder(RuleBuilder parent, Expression<Func<TClass, TProperty>> member)
 		{
 			Parent = parent;
 			MemberPath = member.GetPath();
+			GetMemberValueFunc = member.Compile();
+			GetPropertyOwnerFunc = () => null;
 		}
 
 		internal override void InternalAddRuleFactory(IRuleFactory ruleFactory)

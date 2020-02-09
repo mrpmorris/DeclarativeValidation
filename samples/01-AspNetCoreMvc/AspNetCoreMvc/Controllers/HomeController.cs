@@ -28,6 +28,8 @@ namespace AspNetCoreMvc.Controllers
 			validationContext.AllValidationsEnded += (_, m) => Debug.WriteLine("All validation complete");
 
 			IEnumerable<RuleViolation> ruleViolations = await ValidationService.ValidateAsync(validationContext);
+			foreach (RuleViolation ruleViolation in ruleViolations)
+				ModelState.AddModelError(ruleViolation.MemberPath, ruleViolation.ErrorMessage);
 			return View();
 		}
 
