@@ -14,9 +14,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreMvc", "samples\01-AspNetCoreMvc\AspNetCoreMvc\AspNetCoreMvc.csproj", "{E71EDA10-C15E-45F1-B0AB-F9C9354AFFF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreMvc", "samples\01-AspNetCoreMvc\AspNetCoreMvc\AspNetCoreMvc.csproj", "{E71EDA10-C15E-45F1-B0AB-F9C9354AFFF6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-AspNetCoreMvc", "01-AspNetCoreMvc", "{581F46D1-B967-4E9C-B2AF-2B0B5F1C0D36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeterLeslieMorris.DeclarativeValidation.UnitTests", "test\PeterLeslieMorris.DeclarativeValidation.UnitTests\PeterLeslieMorris.DeclarativeValidation.UnitTests.csproj", "{E2ED77FB-A16F-4D58-AEC3-D08AD5281E1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,10 @@ Global
 		{E71EDA10-C15E-45F1-B0AB-F9C9354AFFF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E71EDA10-C15E-45F1-B0AB-F9C9354AFFF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E71EDA10-C15E-45F1-B0AB-F9C9354AFFF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2ED77FB-A16F-4D58-AEC3-D08AD5281E1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2ED77FB-A16F-4D58-AEC3-D08AD5281E1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2ED77FB-A16F-4D58-AEC3-D08AD5281E1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2ED77FB-A16F-4D58-AEC3-D08AD5281E1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
