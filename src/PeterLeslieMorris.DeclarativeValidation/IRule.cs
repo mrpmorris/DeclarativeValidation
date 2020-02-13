@@ -4,6 +4,6 @@ namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public interface IRule
 	{
-		Task<bool> ValidateAsync(object value);
+		Task<bool> ValidateAsync(ValidationContext context, object value);
 	}
 }

@@ -17,9 +17,9 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			string errorMessage,
 			Func<MemberIdentifier> getMemberIdentifier)
 		{
-			MemberPath = memberPath;
+			MemberPath = memberPath ?? throw new ArgumentNullException(nameof(memberPath));
 			ErrorCode = errorCode;
-			ErrorMessage = errorMessage;
+			ErrorMessage = errorMessage ?? throw new ArgumentNullException(nameof(ErrorMessage));
 			GetMemberIdentifier = getMemberIdentifier;
 		}
 	}

@@ -5,8 +5,6 @@ namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public interface IValidationService
 	{
-		Task<IEnumerable<RuleViolation>> ValidateAsync(object subject);
-		//TODO: Make ValidateAsync
-		Task<IEnumerable<RuleViolation>> ValidateAsync(ValidationContext context);
+		Task<IEnumerable<RuleViolation>> ValidateAsync(ValidationContext context, object subject);
 	}
 }

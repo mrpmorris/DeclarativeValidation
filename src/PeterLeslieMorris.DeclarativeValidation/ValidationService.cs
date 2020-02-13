@@ -22,26 +22,19 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			ServiceProvider = serviceProvider;
 		}
 
-		public Task<IEnumerable<RuleViolation>> ValidateAsync(object subject)
-		{
-			var context = new ValidationContext(subject);
-			return ValidateAsync(context);
-		}
-
-		public Task<IEnumerable<RuleViolation>> ValidateAsync(ValidationContext context)
+		public Task<IEnumerable<RuleViolation>> ValidateAsync(ValidationContext context, object subject)
 		{
 			if (context == null)
-				throw new NotImplementedException(nameof(context));
-
-			object subject = context.Subject;
-
+				throw new ArgumentNullException(nameof(context));
+			if (subject == null)
+				throw new ArgumentNullException(nameof(subject));
 
 			// TODO: Walk the type hierarchy
 
 			if (!RuleFactoriesByClass.TryGetValue(subject.GetType(), out IEnumerable<ClassRuleFactory> factories))
 				factories = Array.Empty<ClassRuleFactory>();
 
-			return context.ValidateAsync(ServiceProvider, factories);
+			return context.ValidateAsync(ServiceProvider, factories, subject);
 		}
 	}
 }

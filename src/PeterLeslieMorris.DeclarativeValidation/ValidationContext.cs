@@ -9,7 +9,6 @@ namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public sealed class ValidationContext
 	{
-		public readonly object Subject;
 		public int PendingValidationsCount { get; private set; }
 		public event EventHandler<string> MemberValidationStarted;
 		public event EventHandler<string> MemberValidationEnded;
@@ -20,9 +19,8 @@ namespace PeterLeslieMorris.DeclarativeValidation
 
 		// TODO - Add a task completion source to constrcu
 
-		public ValidationContext(object subject)
+		public ValidationContext()
 		{
-			Subject = subject;
 			RuleEvaluations = new ConcurrentDictionary<string, ValidationStatus>();
 		}
 
@@ -49,19 +47,19 @@ namespace PeterLeslieMorris.DeclarativeValidation
 		}
 
 		// TODO - Add ability to specify which members are validated
-		internal async Task<IEnumerable<RuleViolation>> ValidateAsync(IServiceProvider serviceProvider, IEnumerable<ClassRuleFactory> ruleFactories)
+		internal async Task<IEnumerable<RuleViolation>> ValidateAsync(
+			IServiceProvider serviceProvider,
+			IEnumerable<ClassRuleFactory> ruleFactories,
+			object value)
 		{
 			if (serviceProvider is null)
 				throw new ArgumentNullException(nameof(serviceProvider));
 			if (ruleFactories == null)
 				throw new ArgumentNullException(nameof(ruleFactories));
 
-			if (Subject != null)
-			{
-				var tasks = ruleFactories
-					.Select(x => x.Create(serviceProvider).ValidateAsync(this));
-				await Task.WhenAll(tasks);
-			}
+			var tasks = ruleFactories
+				.Select(x => x.Create(serviceProvider).ValidateAsync(this, value));
+			await Task.WhenAll(tasks);
 
 			AllValidationsEnded?.Invoke(this, EventArgs.Empty);
 			return RuleEvaluations.Values.SelectMany(x => x.GetRuleViolations());

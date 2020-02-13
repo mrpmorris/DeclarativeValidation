@@ -6,7 +6,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Rules
 	{
 		public ulong Min { get; set; }
 
-		public Task<bool> ValidateAsync(object value) =>
+		public Task<bool> ValidateAsync(ValidationContext context, object value) =>
 			Task.FromResult(true);
 	}
 }

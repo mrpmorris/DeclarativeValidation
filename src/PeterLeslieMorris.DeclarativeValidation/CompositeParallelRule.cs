@@ -13,9 +13,9 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			Rules = new List<IRule>(rules);
 		}
 
-		public async Task<bool> ValidateAsync(object value)
+		public async Task<bool> ValidateAsync(ValidationContext context, object value)
 		{
-			var allTasks = Rules.Select(x => x.ValidateAsync(value));
+			var allTasks = Rules.Select(x => x.ValidateAsync(context, value));
 			await Task.WhenAll(allTasks);
 			return allTasks.All(x => x.Result);
 		}

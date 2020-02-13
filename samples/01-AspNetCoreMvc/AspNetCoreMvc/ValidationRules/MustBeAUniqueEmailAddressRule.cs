@@ -16,7 +16,7 @@ namespace AspNetCoreMvc.ValidationRules
 			PersonRepository = personRepository;
 		}
 
-		public async Task<bool> ValidateAsync(object value)
+		public async Task<bool> ValidateAsync(ValidationContext context, object value)
 		{
 			await Task.Delay(1000);
 			return false;
