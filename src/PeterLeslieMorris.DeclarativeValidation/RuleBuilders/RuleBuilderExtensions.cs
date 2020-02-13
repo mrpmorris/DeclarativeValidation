@@ -4,7 +4,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.RuleBuilders
 {
 	public static class RuleBuilderExtensions
 	{
-		public static void AddRuleFactory(this RuleBuilder builder, IRuleFactory ruleFactory)
+		public static void AddRuleFactory(this RuleBuilderBase builder, IRuleFactory ruleFactory)
 		{
 			builder.InternalAddRuleFactory(ruleFactory);
 		}

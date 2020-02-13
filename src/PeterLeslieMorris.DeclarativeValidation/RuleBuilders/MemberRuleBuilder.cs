@@ -4,7 +4,7 @@ using PeterLeslieMorris.DeclarativeValidation.RuleFactories;
 
 namespace PeterLeslieMorris.DeclarativeValidation.RuleBuilders
 {
-	public abstract class MemberRuleBuilder : RuleBuilder
+	public abstract class MemberRuleBuilder : RuleBuilderBase
 	{
 		internal string MemberPath { get; set; }
 	}
@@ -12,11 +12,11 @@ namespace PeterLeslieMorris.DeclarativeValidation.RuleBuilders
 	public class MemberRuleBuilder<TClass, TProperty> : MemberRuleBuilder
 		where TClass : class
 	{
-		private readonly RuleBuilder Parent;
+		private readonly RuleBuilderBase Parent;
 		public readonly Func<TClass, TProperty> GetMemberValueFunc;
 		public readonly Func<object> GetPropertyOwnerFunc;
 
-		internal MemberRuleBuilder(RuleBuilder parent, Expression<Func<TClass, TProperty>> member)
+		internal MemberRuleBuilder(RuleBuilderBase parent, Expression<Func<TClass, TProperty>> member)
 		{
 			Parent = parent;
 			MemberPath = member.GetPath();

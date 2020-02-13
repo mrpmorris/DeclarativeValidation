@@ -5,7 +5,7 @@ using PeterLeslieMorris.DeclarativeValidation.RuleFactories;
 
 namespace PeterLeslieMorris.DeclarativeValidation.RuleBuilders
 {
-	public abstract class ClassRuleBuilder : RuleBuilder
+	public abstract class ClassRuleBuilder : RuleBuilderBase
 	{
 		internal abstract Type ClassType { get; }
 		internal abstract ClassRuleFactory CreateRuleFactory();
