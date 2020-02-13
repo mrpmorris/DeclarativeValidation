@@ -2,24 +2,27 @@
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	public class RuleViolation
+	public class ValidationError
 	{
+		public string MemberName { get; set; }
 		public string MemberPath { get; set; }
 		public string ErrorCode { get; set; }
 		public string ErrorMessage { get; set; }
 		public readonly Func<MemberIdentifier> GetMemberIdentifier;
 
-		public RuleViolation() { }
+		public ValidationError() { }
 
-		public RuleViolation(
+		public ValidationError(
+			string memberName,
 			string memberPath,
 			string errorCode,
 			string errorMessage,
 			Func<MemberIdentifier> getMemberIdentifier)
 		{
-			MemberPath = memberPath ?? throw new ArgumentNullException(nameof(memberPath));
+			MemberName = memberName;
+			MemberPath = memberPath;
 			ErrorCode = errorCode;
-			ErrorMessage = errorMessage ?? throw new ArgumentNullException(nameof(ErrorMessage));
+			ErrorMessage = errorMessage;
 			GetMemberIdentifier = getMemberIdentifier;
 		}
 	}

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PeterLeslieMorris.DeclarativeValidation
+namespace PeterLeslieMorris.DeclarativeValidation.Rules
 {
 	public class CompositeParallelRule : IRule
 	{

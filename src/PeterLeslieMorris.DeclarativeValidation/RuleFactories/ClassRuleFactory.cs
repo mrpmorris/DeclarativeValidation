@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PeterLeslieMorris.DeclarativeValidation.Rules;
 
 namespace PeterLeslieMorris.DeclarativeValidation.RuleFactories
 {
