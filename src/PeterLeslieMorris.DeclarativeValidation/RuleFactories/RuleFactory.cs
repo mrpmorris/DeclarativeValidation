@@ -13,9 +13,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.RuleFactories
 			InitializeRuleProperties = initializeRuleProperties;
 		}
 
-		IRule IRuleFactory.Create(IServiceProvider serviceProvider) => Create(serviceProvider);
-
-		public TRule Create(IServiceProvider serviceProvider)
+		public IRule Create(IServiceProvider serviceProvider)
 		{
 			var rule = (TRule)serviceProvider.GetService(typeof(TRule));
 			InitializeRuleProperties?.Invoke(rule);
