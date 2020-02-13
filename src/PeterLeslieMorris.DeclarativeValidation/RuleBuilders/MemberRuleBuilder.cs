@@ -26,8 +26,6 @@ namespace PeterLeslieMorris.DeclarativeValidation.RuleBuilders
 
 		internal override void InternalAddRuleFactory(IRuleFactory ruleFactory)
 		{
-			if (ruleFactory.MemberPath == null)
-				ruleFactory.MemberPath = MemberPath;
 			Parent.InternalAddRuleFactory(ruleFactory);
 		}
 	}

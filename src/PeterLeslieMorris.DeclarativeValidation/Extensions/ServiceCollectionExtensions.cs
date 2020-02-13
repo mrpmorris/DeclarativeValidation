@@ -5,7 +5,7 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using PeterLeslieMorris.DeclarativeValidation.RuleFactories;
 
-namespace PeterLeslieMorris.DeclarativeValidation.Extensions
+namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public static class ServiceCollectionExtensions
 	{
