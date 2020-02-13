@@ -18,7 +18,6 @@ namespace PeterLeslieMorris.DeclarativeValidation.RuleFactories
 		public TRule Create(IServiceProvider serviceProvider)
 		{
 			var rule = (TRule)serviceProvider.GetService(typeof(TRule));
-			rule.MemberPath = MemberPath;
 			InitializeRuleProperties?.Invoke(rule);
 			return rule;
 		}

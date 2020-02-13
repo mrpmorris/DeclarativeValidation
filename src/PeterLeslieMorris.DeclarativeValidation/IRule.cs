@@ -4,8 +4,6 @@ namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public interface IRule
 	{
-		string MemberPath { get; set; }
-		string ToJson() => "";
-		Task ValidateAsync(ValidationContext context);
+		Task<bool> ValidateAsync(object value);
 	}
 }

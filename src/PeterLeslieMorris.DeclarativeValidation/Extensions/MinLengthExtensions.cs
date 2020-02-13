@@ -18,8 +18,6 @@ namespace PeterLeslieMorris.DeclarativeValidation
 		{
 			var factory = new RuleFactory<MinLengthRule>(x => {
 				x.Min = min;
-				x.ErrorCode = errorCode ?? x.ErrorCode;
-				x.ErrorMessageFormat = errorMessageFormat ?? x.ErrorMessageFormat;
 			});
 			builder.InternalAddRuleFactory(factory);
 			return builder;

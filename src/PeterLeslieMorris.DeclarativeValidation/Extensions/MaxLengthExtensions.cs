@@ -18,8 +18,6 @@ namespace PeterLeslieMorris.DeclarativeValidation
 		{
 			var factory = new RuleFactory<MaxLengthRule>(x => {
 				x.Max = max;
-				x.ErrorCode = errorCode ?? x.ErrorCode;
-				x.ErrorMessageFormat = errorMessageFormat ?? x.ErrorMessageFormat;
 			});
 			builder.InternalAddRuleFactory(factory);
 			return builder;

@@ -7,25 +7,19 @@ using PeterLeslieMorris.DeclarativeValidation.RuleFactories;
 
 namespace AspNetCoreMvc.ValidationRules
 {
-	public class MustBeAUniqueEmailAddressRule : RuleBase
+	public class MustBeAUniqueEmailAddressRule : IRule
 	{
 		private readonly IPersonRepository PersonRepository;
 
 		public MustBeAUniqueEmailAddressRule(IPersonRepository personRepository)
-			: base(
-					errorCode: "MustBeAUniqueEmailAddress",
-					errorMessageFormat: "Must be a unique email address")
 		{ 
 			PersonRepository = personRepository;
 		}
 
-		public override string GetErrorMessage() => ErrorMessageFormat;
-		public override string ToJson() => "";
-
-		public async override Task ValidateAsync(ValidationContext context)
+		public async Task<bool> ValidateAsync(object value)
 		{
 			await Task.Delay(1000);
-			context.AddRuleViolation(CreateRuleViolation());
+			return false;
 		}
 	}
 
@@ -36,10 +30,7 @@ namespace AspNetCoreMvc.ValidationRules
 			string errorCode = null,
 			string errorMessageFormat = null)
 		{
-			var factory = new RuleFactory<MustBeAUniqueEmailAddressRule>(x => {
-				x.ErrorCode = errorCode ?? x.ErrorCode;
-				x.ErrorMessageFormat = errorMessageFormat ?? x.ErrorMessageFormat;
-			});
+			var factory = new RuleFactory<MustBeAUniqueEmailAddressRule>(null);
 			builder.AddRuleFactory(factory);
 			return builder;
 		}

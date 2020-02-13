@@ -1,14 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using PeterLeslieMorris.DeclarativeValidation;
-using SimpleMemberValidationSample.ValidationProfiles;
+﻿using System.Threading.Tasks;
 
 namespace SimpleMemberValidationSample
 {
 	class Program
 	{
-		static async Task Main(string[] args)
+		static Task Main(string[] args)
 		{
+			return Task.CompletedTask;
 		}
 	}
 }
