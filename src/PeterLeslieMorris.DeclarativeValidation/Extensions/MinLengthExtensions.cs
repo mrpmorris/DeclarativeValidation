@@ -16,7 +16,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			where TClass : class
 			where TProperty: IEnumerable
 		{
-			var factory = new RuleFactory<MinLengthRule>(x => {
+			var factory = new MemberRuleFactory<MinLengthRule>(x => {
 				x.Min = min;
 			});
 			builder.InternalAddRuleFactory(factory);

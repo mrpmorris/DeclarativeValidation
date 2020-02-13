@@ -16,7 +16,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			where TClass : class
 			where TProperty: IEnumerable
 		{
-			var factory = new RuleFactory<MaxLengthRule>(x => {
+			var factory = new MemberRuleFactory<MaxLengthRule>(x => {
 				x.Max = max;
 			});
 			builder.InternalAddRuleFactory(factory);

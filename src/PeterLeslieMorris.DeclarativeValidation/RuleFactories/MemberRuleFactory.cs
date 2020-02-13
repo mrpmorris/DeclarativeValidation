@@ -2,13 +2,13 @@
 
 namespace PeterLeslieMorris.DeclarativeValidation.RuleFactories
 {
-	public class RuleFactory<TRule> : IRuleFactory
+	public class MemberRuleFactory<TRule> : IRuleFactory
 		where TRule : IRule
 	{
 		public string MemberPath { get; set; }
 		private readonly Action<TRule> InitializeRuleProperties;
 
-		public RuleFactory(Action<TRule> initializeRuleProperties)
+		public MemberRuleFactory(Action<TRule> initializeRuleProperties)
 		{
 			InitializeRuleProperties = initializeRuleProperties;
 		}

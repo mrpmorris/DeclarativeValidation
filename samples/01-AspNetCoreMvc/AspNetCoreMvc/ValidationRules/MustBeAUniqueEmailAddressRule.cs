@@ -30,7 +30,7 @@ namespace AspNetCoreMvc.ValidationRules
 			string errorCode = null,
 			string errorMessageFormat = null)
 		{
-			var factory = new RuleFactory<MustBeAUniqueEmailAddressRule>(null);
+			var factory = new MemberRuleFactory<MustBeAUniqueEmailAddressRule>(null);
 			builder.AddRuleFactory(factory);
 			return builder;
 		}
