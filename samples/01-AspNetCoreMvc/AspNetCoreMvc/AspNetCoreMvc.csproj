@@ -8,6 +8,10 @@
     <ProjectReference Include="..\..\..\src\PeterLeslieMorris.DeclarativeValidation\PeterLeslieMorris.DeclarativeValidation.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ValidationRules\" />
+  </ItemGroup>
+
 
 
 </Project>

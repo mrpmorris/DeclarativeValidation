@@ -1,3 +1,4 @@
+using AspNetCoreMvc.ModelValidators;
 using AspNetCoreMvc.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,8 +22,8 @@ namespace AspNetCoreMvc
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllersWithViews();
-			services.AddDeclarativeValidation(typeof(Startup).Assembly);
 			services.AddScoped<IPersonRepository, PersonRepository>();
+			new PersonValidator();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
