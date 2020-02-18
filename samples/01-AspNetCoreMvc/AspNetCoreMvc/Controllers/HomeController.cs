@@ -3,23 +3,37 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AspNetCoreMvc.Models;
-using PeterLeslieMorris.DeclarativeValidation;
-using System.Collections.Generic;
+using System;
+using AspNetCoreMvc.ModelValidators;
+using PeterLeslieMorris.DeclarativeValidation.Definitions;
 
 namespace AspNetCoreMvc.Controllers
 {
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> Logger;
+		private readonly IServiceProvider ServiceProvider;
 
-		public HomeController(ILogger<HomeController> logger)
+		public HomeController(ILogger<HomeController> logger, IServiceProvider serviceProvider)
 		{
 			Logger = logger;
+			ServiceProvider = serviceProvider;
 		}
 
 		public async Task<IActionResult> Index()
 		{
 			var person = new Person();
+			var validator = new PersonValidator();
+			foreach(var memberAndRuleFactories in validator.GetRuleFactories())
+			{
+				foreach(IMemberRuleFactory ruleFactory in memberAndRuleFactories.RuleFactories)
+				{
+					var rule = ruleFactory.CreateRule(ServiceProvider);
+					bool isValid = await rule.IsValidAsync(null);
+					if (!isValid)
+						break;
+				}
+			}
 			return View();
 		}
 

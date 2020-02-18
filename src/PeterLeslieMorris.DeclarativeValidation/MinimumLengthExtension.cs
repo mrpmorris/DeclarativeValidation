@@ -14,6 +14,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			{
 				r.MinimumLength = minimumLength;
 			});
+			builder.AddRuleFactory(factory);
 			return builder;
 		}
 	}

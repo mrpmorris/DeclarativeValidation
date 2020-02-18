@@ -11,7 +11,7 @@ namespace AspNetCoreMvc.ModelValidators
 			For(x => x.GivenName, v => v.NotNull());
 			For(x => x.FamilyName, v => v.NotNull());
 			For(x => x.EmailAddress, v => v.NotNull());
-			For(x => x.Address, v => v.NotNull());
+			For(x => x.Address.CountryCode, v => v.NotNull());
 		}
 	}
 }

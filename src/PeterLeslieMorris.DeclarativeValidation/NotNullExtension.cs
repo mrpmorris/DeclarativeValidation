@@ -11,6 +11,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			var factory = new MemberRuleFactory<NotNullRule<TMember>>(r =>
 			{
 			});
+			builder.AddRuleFactory(factory);
 			return builder;
 		}
 	}

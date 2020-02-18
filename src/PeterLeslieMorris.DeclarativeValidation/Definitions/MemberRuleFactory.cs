@@ -3,7 +3,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 {
-	public class MemberRuleFactory<TMemberRule>
+	public interface IMemberRuleFactory
+	{
+		public IRule CreateRule(IServiceProvider serviceProvider);
+	}
+
+	public class MemberRuleFactory<TMemberRule> : IMemberRuleFactory
+		where TMemberRule: IRule
 	{
 		internal readonly Action<TMemberRule> InitializeRule;
 
@@ -12,7 +18,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			InitializeRule = initializeRule;
 		}
 
-		public TMemberRule CreateRule(IServiceProvider serviceProvider)
+		public IRule CreateRule(IServiceProvider serviceProvider)
 		{
 			var rule = serviceProvider.GetRequiredService<TMemberRule>();
 			InitializeRule(rule);
