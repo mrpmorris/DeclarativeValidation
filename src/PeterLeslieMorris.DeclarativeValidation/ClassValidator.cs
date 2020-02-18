@@ -21,8 +21,8 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			RuleFactoriesByMemberPath.Values;
 
 		public void For<TMember>(
-			Expression<Func<TClass, TMember>> member,
-			Action<MemberRuleBuilder<TClass, TMember>> buildRuleFactories)
+		Expression<Func<TClass, TMember>> member,
+		Action<MemberRuleBuilder<TClass, TMember>> buildRuleFactories)
 		{
 			var memberRuleBuilder = new MemberRuleBuilder<TClass, TMember>(this);
 			buildRuleFactories(memberRuleBuilder);

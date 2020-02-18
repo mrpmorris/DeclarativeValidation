@@ -29,10 +29,7 @@ namespace AspNetCoreMvc.Controllers
 				GivenName = "Peter",
 				FamilyName = "Morris",
 				EmailAddress = "me",
-				Address = new Address
-				{
-					Area = "Ha"
-				}
+				Address = null
 			};
 			var validator = new PersonValidator();
 			foreach(var memberAndRuleFactories in validator.GetRuleFactories())
