@@ -6,6 +6,7 @@ using AspNetCoreMvc.Models;
 using System;
 using AspNetCoreMvc.ModelValidators;
 using PeterLeslieMorris.DeclarativeValidation.Definitions;
+using PeterLeslieMorris.DeclarativeValidation;
 
 namespace AspNetCoreMvc.Controllers
 {
@@ -22,14 +23,25 @@ namespace AspNetCoreMvc.Controllers
 
 		public async Task<IActionResult> Index()
 		{
-			var person = new Person();
+			var person = new Person
+			{
+				Salutation = "X",
+				GivenName = "Peter",
+				FamilyName = "Morris",
+				EmailAddress = "me",
+				Address = new Address
+				{
+					Area = "Ha"
+				}
+			};
 			var validator = new PersonValidator();
 			foreach(var memberAndRuleFactories in validator.GetRuleFactories())
 			{
+				object memberValue = memberAndRuleFactories.GetMemberValue(person);
 				foreach(IMemberRuleFactory ruleFactory in memberAndRuleFactories.RuleFactories)
 				{
 					var rule = ruleFactory.CreateRule(ServiceProvider);
-					bool isValid = await rule.IsValidAsync(null);
+					bool isValid = await rule.IsValidAsync(memberValue);
 					if (!isValid)
 						break;
 				}

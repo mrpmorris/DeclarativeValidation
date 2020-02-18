@@ -25,6 +25,7 @@ namespace AspNetCoreMvc
 			services.AddControllersWithViews();
 			services.AddScoped<IPersonRepository, PersonRepository>();
 			services.AddSingleton(typeof(NotNullRule<>));
+			services.AddSingleton(typeof(MinimumLengthRule<>));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

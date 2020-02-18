@@ -30,12 +30,21 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			var memberRuleFactories = memberRuleBuilder.GetMemberRuleFactories();
 
 			string memberPath = member.GetMemberPath();
+
+			Func<TClass, TMember> getStronglyTypedValue = member.Compile();
+			Func<object, object> getValue = (object instance) =>
+				getStronglyTypedValue((TClass)instance);
+
 			RuleFactoriesByMemberPath.AddOrUpdate(
 				key: memberPath,
-				addValue: new MemberAndRuleFactories(memberPath, memberRuleFactories),
+				addValue: new MemberAndRuleFactories(
+					memberPath,
+					getValue,
+					memberRuleFactories),
 				updateValueFactory: (key, validators) =>
 					new MemberAndRuleFactories(
 						memberPath,
+						getValue,
 						validators.RuleFactories.Union(memberRuleFactories).ToArray()));
 		}
 	}
