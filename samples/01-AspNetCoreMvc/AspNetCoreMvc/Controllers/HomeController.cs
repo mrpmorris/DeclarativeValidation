@@ -13,11 +13,16 @@ namespace AspNetCoreMvc.Controllers
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> Logger;
+		private readonly IValidatorRepository ValidatorRepository;
 		private readonly IServiceProvider ServiceProvider;
 
-		public HomeController(ILogger<HomeController> logger, IServiceProvider serviceProvider)
+		public HomeController(
+			ILogger<HomeController> logger,
+			IValidatorRepository validatorRepository,
+			IServiceProvider serviceProvider)
 		{
 			Logger = logger;
+			ValidatorRepository = validatorRepository;
 			ServiceProvider = serviceProvider;
 		}
 
@@ -31,16 +36,18 @@ namespace AspNetCoreMvc.Controllers
 				EmailAddress = "me",
 				Address = null
 			};
-			var validator = new PersonValidator();
-			foreach(var memberAndRuleFactories in validator.GetRuleFactories())
+			foreach (IClassValidator validator in ValidatorRepository.GetClassValidators<Person>())
 			{
-				object memberValue = memberAndRuleFactories.GetMemberValue(person);
-				foreach(IMemberRuleFactory ruleFactory in memberAndRuleFactories.RuleFactories)
+				foreach (var memberAndRuleFactories in validator.GetRuleFactories())
 				{
-					var rule = ruleFactory.CreateRule(ServiceProvider);
-					bool isValid = await rule.IsValidAsync(memberValue);
-					if (!isValid)
-						break;
+					object memberValue = memberAndRuleFactories.GetMemberValue(person);
+					foreach (IMemberRuleFactory ruleFactory in memberAndRuleFactories.RuleFactories)
+					{
+						var rule = ruleFactory.CreateRule(ServiceProvider);
+						bool isValid = await rule.IsValidAsync(memberValue);
+						if (!isValid)
+							break;
+					}
 				}
 			}
 			return View();

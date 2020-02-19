@@ -8,7 +8,13 @@ using PeterLeslieMorris.DeclarativeValidation.Extensions;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	public abstract class ClassValidator<TClass>
+	public interface IClassValidator
+	{
+		Type GetClassType();
+		IEnumerable<MemberAndRuleFactories> GetRuleFactories();
+	}
+
+	public abstract class ClassValidator<TClass> : IClassValidator
 	{
 		private readonly ConcurrentDictionary<string, MemberAndRuleFactories> RuleFactoriesByMemberPath;
 
@@ -17,6 +23,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			RuleFactoriesByMemberPath = new ConcurrentDictionary<string, MemberAndRuleFactories>();
 		}
 
+		public Type GetClassType() => typeof(TClass);
 		public IEnumerable<MemberAndRuleFactories> GetRuleFactories() =>
 			RuleFactoriesByMemberPath.Values;
 
