@@ -8,7 +8,9 @@ namespace PeterLeslieMorris.DeclarativeValidation
 		public string MemberPath { get; set; }
 		public string ErrorCode { get; set; }
 		public string ErrorMessage { get; set; }
-		public readonly Func<MemberIdentifier> GetMemberIdentifier;
+
+		private MemberIdentifier MemberIdentifier;
+		private Func<MemberIdentifier> GetMemberIdentifierFunc;
 
 		public ValidationError() { }
 
@@ -23,7 +25,15 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			MemberPath = memberPath;
 			ErrorCode = errorCode;
 			ErrorMessage = errorMessage;
-			GetMemberIdentifier = getMemberIdentifier;
+			GetMemberIdentifierFunc = getMemberIdentifier;
 		}
+
+		public MemberIdentifier GetMemberIdentifier()
+		{
+			if (MemberIdentifier == null)
+				MemberIdentifier = GetMemberIdentifierFunc();
+			return MemberIdentifier;
+		}
+
 	}
 }
