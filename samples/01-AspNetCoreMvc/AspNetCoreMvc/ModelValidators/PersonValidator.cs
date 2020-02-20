@@ -9,11 +9,13 @@ namespace AspNetCoreMvc.ModelValidators
 	{
 		public PersonValidator()
 		{
-			When(x => x.FamilyName, its => its.NotNull(), c => {
+			For(x => x.Salutation, v => v.NotNull());
+
+			When(x => x.FamilyName, @is => @is.NotNull(), c => {
 				c.For(x => x.GivenName, v => v.NotNull());
 			});
 
-			SwitchWhen(x => x.Address, its => its.NotNull(), address =>
+			SwitchWhen(x => x.Address, @is => @is.NotNull(), address =>
 			{
 				address.SwitchWhen(x => x.Country, its => its.NotNull(), country =>
 				{
