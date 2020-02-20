@@ -1,9 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	public interface IValidator<TClass>
+	internal interface IValidator<TClass>
 	{
-		Task ValidateAsync(IValidationContext context, TClass obj);
+		Task ValidateAsync(
+			IServiceProvider serviceProvider,
+			IValidationContext context,
+			TClass obj);
 	}
 }

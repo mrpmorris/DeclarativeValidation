@@ -44,6 +44,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 		}
 
 		async Task IValidator<TClass>.ValidateAsync(
+			IServiceProvider serviceProvider,
 			IValidationContext context,
 			TClass obj)
 		{
@@ -51,7 +52,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			foreach (var validatorFactory in ValidatorFactories)
 			{
 				IValueValidator<TMember> validator =
-					validatorFactory(null);
+					validatorFactory(serviceProvider);
 				bool isValid = await validator.IsValidAsync(memberValue);
 				if (!isValid)
 				{
@@ -63,7 +64,6 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 						() => new MemberIdentifier(GetOwner(obj), MemberName));
 				};
 			}
-			throw new NotImplementedException();
 		}
 	}
 }

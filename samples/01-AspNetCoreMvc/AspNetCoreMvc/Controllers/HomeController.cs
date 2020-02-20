@@ -40,9 +40,6 @@ namespace AspNetCoreMvc.Controllers
 					}
 				}
 			};
-			var cmv = new ClassMemberValidator<Person, string>(x => x.Address.Country.Code);
-			cmv.AddValidatorFactory((sp) => new NotNullValidator<string>());
-			await (cmv as IValidator<Person>).ValidateAsync(null, person);
 			return View();
 		}
 
