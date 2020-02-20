@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	internal interface IValidator<TClass>
+	public interface IValidator<TClass>
 	{
 		Task ValidateAsync(
 			IServiceProvider serviceProvider,

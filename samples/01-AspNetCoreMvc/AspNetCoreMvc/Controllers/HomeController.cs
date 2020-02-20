@@ -40,6 +40,8 @@ namespace AspNetCoreMvc.Controllers
 					}
 				}
 			};
+			var personValidator = new PersonValidator();
+			await (personValidator as IValidator<Person>).ValidateAsync(null, null, person);
 			return View();
 		}
 
@@ -53,12 +55,5 @@ namespace AspNetCoreMvc.Controllers
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
-	}
-
-	public class NotNullValidator<TValue> : IValueValidator<TValue>
-		where TValue : class
-	{
-		Task<bool> IValueValidator<TValue>.IsValidAsync(TValue value) =>
-			Task.FromResult(value != null);
 	}
 }

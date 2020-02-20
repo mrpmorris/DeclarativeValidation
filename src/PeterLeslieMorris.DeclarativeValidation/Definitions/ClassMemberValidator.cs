@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -59,9 +60,10 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 					var validationError = new ValidationError(
 						memberName: MemberName,
 						memberPath: MemberPath,
-						errorCode: null,
-						errorMessage: "hahaha",
+						errorCode: validator.ErrorCode,
+						errorMessage: validator.ErrorMessage,
 						() => new MemberIdentifier(GetOwner(obj), MemberName));
+					break;
 				};
 			}
 		}
