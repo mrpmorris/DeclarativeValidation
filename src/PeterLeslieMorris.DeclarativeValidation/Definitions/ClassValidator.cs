@@ -19,6 +19,13 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			validate(classMemberValidator);
 		}
 
+		public void When<TMember>(
+			Expression<Func<TClass, TMember>> member,
+			Action<ClassMemberValidator<TClass, TMember>> condition,
+			Action<ClassValidator<TMember>> validate)
+		{
+		}
+
 		async Task IValidator<TClass>.ValidateAsync(
 			IServiceProvider serviceProvider,
 			IValidationContext context,
