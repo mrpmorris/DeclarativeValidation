@@ -11,11 +11,11 @@ namespace AspNetCoreMvc.Controllers
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> Logger;
-		private readonly IClassValidatorRepository ClassValidatorRepository;
+		private readonly IValidatorRepository ClassValidatorRepository;
 
 		public HomeController(
 			ILogger<HomeController> logger,
-			IClassValidatorRepository classValidatorRepository)
+			IValidatorRepository classValidatorRepository)
 		{
 			Logger = logger;
 			ClassValidatorRepository = classValidatorRepository;

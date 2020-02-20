@@ -30,9 +30,9 @@ namespace PeterLeslieMorris.DeclarativeValidation
 				.Cast<IValidator>()
 				.ToArray();
 
-			services.AddSingleton<IClassValidatorRepository, ClassValidatorRepository>(sp =>
+			services.AddSingleton<IValidatorRepository, ValidatorRepository>(sp =>
 			{
-				var repository = new ClassValidatorRepository();
+				var repository = new ValidatorRepository();
 				foreach (IValidator validator in validators)
 					repository.AddValidator(validator);
 				return repository;

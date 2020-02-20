@@ -5,19 +5,19 @@ using System.Linq;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	public interface IClassValidatorRepository
+	public interface IValidatorRepository
 	{
 		public void AddValidator<TClass>(IValidator<TClass> validator);
 		public IEnumerable<IValidator> GetValidators(Type classToValidate);
 		public IEnumerable<IValidator<TClass>> GetValidators<TClass>();
 	}
 
-	public class ClassValidatorRepository : IClassValidatorRepository
+	public class ValidatorRepository : IValidatorRepository
 	{
 		private readonly System.Reflection.Assembly SystemAssembly;
 		private readonly ConcurrentDictionary<Type, IValidator[]> ValidatorsByType;
 
-		public ClassValidatorRepository()
+		public ValidatorRepository()
 		{
 			SystemAssembly = typeof(object).Assembly;
 			ValidatorsByType = new ConcurrentDictionary<Type, IValidator[]>();
