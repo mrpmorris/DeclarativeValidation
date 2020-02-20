@@ -2,10 +2,10 @@
 {
 	public class Person
 	{
-		public string Salutation;
-		public string GivenName;
-		public string FamilyName;
-		public string EmailAddress;
-		public string[] Address;
+		public string Salutation { get; set; }
+		public string GivenName { get; set; }
+		public string FamilyName { get; set; }
+		public string EmailAddress { get; set; }
+		public Address Address { get; set; }
 	}
 }

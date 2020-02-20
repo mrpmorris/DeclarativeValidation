@@ -1,0 +1,27 @@
+﻿using System.Reflection.Emit;
+using AspNetCoreMvc.Models;
+using PeterLeslieMorris.DeclarativeValidation;
+using PeterLeslieMorris.DeclarativeValidation.Definitions;
+
+namespace AspNetCoreMvc.ModelValidators
+{
+	public class PersonValidator : AggregateRootValidator<Person>
+	{
+		public PersonValidator()
+		{
+			For(x => x.Salutation, v => v.NotNull());
+
+			When(x => x.FamilyName, @is => @is.NotNull(), c => {
+				c.For(x => x.GivenName, v => v.NotNull());
+			});
+
+			SwitchWhen(x => x.Address, @is => @is.NotNull(), address =>
+			{
+				address.SwitchWhen(x => x.Country, its => its.NotNull(), country =>
+				{
+					country.For(x => x.Code, v => v.NotNull());
+				});
+			});
+		}
+	}
+}

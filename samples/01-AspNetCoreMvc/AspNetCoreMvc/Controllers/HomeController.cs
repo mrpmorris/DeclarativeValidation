@@ -11,25 +11,41 @@ namespace AspNetCoreMvc.Controllers
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> Logger;
-		private readonly IValidationService ValidationService;
+		private readonly IValidatorRepository ClassValidatorRepository;
 
-		public HomeController(ILogger<HomeController> logger, IValidationService validationService)
+		public HomeController(
+			ILogger<HomeController> logger,
+			IValidatorRepository classValidatorRepository)
 		{
 			Logger = logger;
-			ValidationService = validationService;
+			ClassValidatorRepository = classValidatorRepository;
 		}
 
 		public async Task<IActionResult> Index()
 		{
-			var person = new Person();
-			var validationContext = new ValidationContext(person);
-			validationContext.MemberValidationStarted += (_, m) => Debug.WriteLine("Started validation for " + m);
-			validationContext.MemberValidationEnded += (_, m) => Debug.WriteLine("Ended validation for " + m);
-			validationContext.AllValidationsEnded += (_, m) => Debug.WriteLine("All validation complete");
+			var person = new Person
+			{
+				Salutation = "X",
+				GivenName = "Peter",
+				FamilyName = "Morris",
+				EmailAddress = "me",
+				Address = new Address
+				{
+					Country = new Country
+					{
+						Code = "GB",
+						Name = "Great Britain"
+					}
+				}
+			};
+			
+			var validators = ClassValidatorRepository.GetValidators<Person>();
+			bool isValid = true;
+			foreach(IValidator<Person> validator in validators)
+			{
+				isValid &= await validator.ValidateAsync(null, null, person);
+			}
 
-			IEnumerable<RuleViolation> ruleViolations = await ValidationService.ValidateAsync(validationContext);
-			foreach (RuleViolation ruleViolation in ruleViolations)
-				ModelState.AddModelError(ruleViolation.MemberPath, ruleViolation.ErrorMessage);
 			return View();
 		}
 
