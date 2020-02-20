@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 
 namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 {
-	public class ClassConditionalValidator<TParentClass, TSubClass> : ClassValidator<TSubClass>, IValidator<TParentClass>
+	internal class SwitchWhenValidator<TParentClass, TSubClass> : ClassValidator<TSubClass>, IValidator<TParentClass>
 	{
 		private readonly ClassMemberValidator<TParentClass, TSubClass> ConditionEvaluator;
 
-		public ClassConditionalValidator(
+		public SwitchWhenValidator(
 			ClassMemberValidator<TParentClass, TSubClass> conditionEvaluator)
 		{
 			ConditionEvaluator = conditionEvaluator;

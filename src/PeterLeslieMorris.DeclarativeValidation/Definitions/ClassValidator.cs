@@ -26,7 +26,19 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 		{
 			var conditionEvaluator = new ClassMemberValidator<TClass, TMember>(member);
 			condition(conditionEvaluator);
-			var subValidator = new ClassConditionalValidator<TClass, TMember>(conditionEvaluator);
+			var subValidator = new SwitchWhenValidator<TClass, TMember>(conditionEvaluator);
+			Validators.Enqueue(subValidator);
+			validate(subValidator);
+		}
+
+		public void When<TMember>(
+			Expression<Func<TClass, TMember>> member,
+			Action<ClassMemberValidator<TClass, TMember>> condition,
+			Action<ClassValidator<TClass>> validate)
+		{
+			var conditionEvaluator = new ClassMemberValidator<TClass, TMember>(member);
+			condition(conditionEvaluator);
+			var subValidator = new WhenValidator<TClass, TMember>(conditionEvaluator);
 			Validators.Enqueue(subValidator);
 			validate(subValidator);
 		}

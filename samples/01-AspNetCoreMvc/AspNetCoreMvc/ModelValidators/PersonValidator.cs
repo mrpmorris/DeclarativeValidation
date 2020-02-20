@@ -1,4 +1,5 @@
-﻿using AspNetCoreMvc.Models;
+﻿using System.Reflection.Emit;
+using AspNetCoreMvc.Models;
 using PeterLeslieMorris.DeclarativeValidation;
 using PeterLeslieMorris.DeclarativeValidation.Definitions;
 
@@ -8,6 +9,10 @@ namespace AspNetCoreMvc.ModelValidators
 	{
 		public PersonValidator()
 		{
+			When(x => x.FamilyName, its => its.NotNull(), c => {
+				c.For(x => x.GivenName, v => v.NotNull());
+			});
+
 			SwitchWhen(x => x.Address, its => its.NotNull(), address =>
 			{
 				address.SwitchWhen(x => x.Country, its => its.NotNull(), country =>
