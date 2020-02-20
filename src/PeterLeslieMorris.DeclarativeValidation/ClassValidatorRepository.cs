@@ -2,15 +2,14 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using PeterLeslieMorris.DeclarativeValidation.Definitions;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public interface IClassValidatorRepository
 	{
-		public void AddValidator(IValidator validator);
-		public IEnumerable<IValidator> GetValidators(Type aggregateRootType);
-		public IEnumerable<IValidator> GetValidators<TAggregateRoot>();
+		public void AddValidator<TClass>(IValidator<TClass> validator);
+		public IEnumerable<IValidator> GetValidators(Type classToValidate);
+		public IEnumerable<IValidator<TClass>> GetValidators<TClass>();
 	}
 
 	public class ClassValidatorRepository : IClassValidatorRepository
@@ -24,7 +23,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			ValidatorsByType = new ConcurrentDictionary<Type, IValidator[]>();
 		}
 
-		public void AddValidator(IValidator validator)
+		internal void AddValidator(IValidator validator)
 		{
 			if (validator == null)
 				throw new ArgumentNullException(nameof(validator));
@@ -34,6 +33,9 @@ namespace PeterLeslieMorris.DeclarativeValidation
 				addValueFactory: _ => (new List<IValidator> { validator }).ToArray(),
 				updateValueFactory: (_, validators) => validators.Append(validator).ToArray());
 		}
+
+		public void AddValidator<TClass>(IValidator<TClass> validator) =>
+			AddValidator((IValidator)validator);
 
 		public IEnumerable<IValidator> GetValidators(Type aggregateRootType)
 		{
@@ -56,7 +58,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			return result;
 		}
 
-		public IEnumerable<IValidator> GetValidators<TAggregateRoot>() =>
-			GetValidators(typeof(TAggregateRoot));
+		public IEnumerable<IValidator<TAggregateRoot>> GetValidators<TAggregateRoot>() =>
+			GetValidators(typeof(TAggregateRoot)).Cast<IValidator<TAggregateRoot>>();
 	}
 }

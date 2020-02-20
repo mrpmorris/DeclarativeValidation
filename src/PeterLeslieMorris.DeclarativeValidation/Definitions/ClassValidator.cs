@@ -58,8 +58,5 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 
 		Task<bool> IValidator<TClass>.ValidateAsync(IServiceProvider serviceProvider, IValidationContext context, TClass obj) =>
 			ValidateAsync(serviceProvider, context, obj);
-
-		Task<bool> IValidator.ValidateAsync(IServiceProvider serviceProvider, IValidationContext context, object obj) =>
-			ValidateAsync(serviceProvider, context, (TClass)obj);
 	}
 }

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AspNetCoreMvc.Models;
 using PeterLeslieMorris.DeclarativeValidation;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace AspNetCoreMvc.Controllers
@@ -40,9 +39,9 @@ namespace AspNetCoreMvc.Controllers
 				}
 			};
 			
-			IEnumerable<IValidator> validators = ClassValidatorRepository.GetValidators<Person>();
+			var validators = ClassValidatorRepository.GetValidators<Person>();
 			bool isValid = true;
-			foreach(IValidator validator in validators)
+			foreach(IValidator<Person> validator in validators)
 			{
 				isValid &= await validator.ValidateAsync(null, null, person);
 			}
