@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using AspNetCoreMvc.Models;
 using System;
 using AspNetCoreMvc.ModelValidators;
-using PeterLeslieMorris.DeclarativeValidation.Definitions;
 using PeterLeslieMorris.DeclarativeValidation;
 
 namespace AspNetCoreMvc.Controllers
@@ -13,16 +12,13 @@ namespace AspNetCoreMvc.Controllers
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> Logger;
-		private readonly IValidatorRepository ValidatorRepository;
 		private readonly IServiceProvider ServiceProvider;
 
 		public HomeController(
 			ILogger<HomeController> logger,
-			IValidatorRepository validatorRepository,
 			IServiceProvider serviceProvider)
 		{
 			Logger = logger;
-			ValidatorRepository = validatorRepository;
 			ServiceProvider = serviceProvider;
 		}
 
@@ -36,20 +32,6 @@ namespace AspNetCoreMvc.Controllers
 				EmailAddress = "me",
 				Address = null
 			};
-			foreach (IClassValidator validator in ValidatorRepository.GetClassValidators<Person>())
-			{
-				foreach (var memberAndRuleFactories in validator.GetRuleFactories())
-				{
-					object memberValue = memberAndRuleFactories.GetMemberValue(person);
-					foreach (IMemberRuleFactory ruleFactory in memberAndRuleFactories.RuleFactories)
-					{
-						var rule = ruleFactory.CreateRule(ServiceProvider);
-						bool isValid = await rule.IsValidAsync(memberValue);
-						if (!isValid)
-							break;
-					}
-				}
-			}
 			return View();
 		}
 

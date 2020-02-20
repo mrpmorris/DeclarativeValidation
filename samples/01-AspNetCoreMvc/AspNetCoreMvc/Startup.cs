@@ -22,11 +22,8 @@ namespace AspNetCoreMvc
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddDeclarativeValidation(typeof(Startup).Assembly);
 			services.AddControllersWithViews();
 			services.AddScoped<IPersonRepository, PersonRepository>();
-			services.AddSingleton(typeof(NotNullRule<>));
-			services.AddSingleton(typeof(MinimumLengthRule<>));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
