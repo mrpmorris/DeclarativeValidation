@@ -2,15 +2,24 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	public class ValidationContext
+	public interface IValidationContext
 	{
+		bool HasErrors { get; }
+		object AggregateRoot { get; }
+		string Scenario { get; }
+		IEnumerable<string> MemberPaths { get; }
+		IEnumerable<ValidationError> Errors { get; }
+		void AddError(ValidationError error);
+	}
+
+	public sealed class ValidationContext : IValidationContext
+	{
+		public bool HasErrors => Errors.Any();
 		public object AggregateRoot { get; }
 		public string Scenario { get; }
-		public bool HasErrors => Errors.Any();
 		public IEnumerable<string> MemberPaths { get; }
 		public IEnumerable<ValidationError> Errors => ValidationErrors;
 
