@@ -1,6 +1,7 @@
 ﻿namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 {
-	public class AggregateRootValidator<TClass> : ClassValidator<TClass>
+	public interface IAggregateRootValidator { }
+	public abstract class AggregateRootValidator<TClass> : ClassValidator<TClass>, IAggregateRootValidator
 	{
 	}
 }

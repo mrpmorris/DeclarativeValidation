@@ -12,6 +12,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 		public string MemberName { get; }
 		public string MemberPath { get; }
 
+		Type IValidator.ClassToValidate => typeof(TClass);
 		internal Func<TClass, TMember> GetValue { get; }
 		private ConcurrentQueue<Func<IServiceProvider, IValueValidator<TMember>>> ValidatorFactories;
 		private Lazy<Func<TClass, object>> LazyGetOwner { get; }
@@ -67,5 +68,8 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			}
 			return true;
 		}
+
+		Task<bool> IValidator.ValidateAsync(IServiceProvider serviceProvider, IValidationContext context, object obj) =>
+			((IValidator<TClass>)this).ValidateAsync(serviceProvider, context, (TClass)obj);
 	}
 }
