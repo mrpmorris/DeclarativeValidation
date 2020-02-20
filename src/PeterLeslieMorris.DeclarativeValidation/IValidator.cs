@@ -5,7 +5,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 {
 	public interface IValidator<TClass>
 	{
-		Task ValidateAsync(
+		Task<bool> ValidateAsync(
 			IServiceProvider serviceProvider,
 			IValidationContext context,
 			TClass obj);

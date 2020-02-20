@@ -12,8 +12,8 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 		public string MemberName { get; }
 		public string MemberPath { get; }
 
+		internal Func<TClass, TMember> GetValue { get; }
 		private ConcurrentQueue<Func<IServiceProvider, IValueValidator<TMember>>> ValidatorFactories;
-		private Func<TClass, TMember> GetValue { get; }
 		private Lazy<Func<TClass, object>> LazyGetOwner { get; }
 		private object GetOwner(TClass source) => LazyGetOwner.Value(source);
 
@@ -43,7 +43,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			ValidatorFactories.Enqueue(factory);
 		}
 
-		async Task IValidator<TClass>.ValidateAsync(
+		async Task<bool> IValidator<TClass>.ValidateAsync(
 			IServiceProvider serviceProvider,
 			IValidationContext context,
 			TClass obj)
@@ -62,9 +62,10 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 						errorCode: validator.ErrorCode,
 						errorMessage: validator.ErrorMessage,
 						() => new MemberIdentifier(GetOwner(obj), MemberName));
-					break;
+					return false;
 				};
 			}
+			return true;
 		}
 	}
 }
