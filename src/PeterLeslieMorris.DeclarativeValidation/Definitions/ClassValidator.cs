@@ -43,7 +43,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			validate(subValidator);
 		}
 
-		public virtual async Task<bool> ValidateAsync(
+		protected virtual async Task<bool> ValidateAsync(
 			IServiceProvider serviceProvider,
 			IValidationContext context,
 			TClass obj)
@@ -53,5 +53,8 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 				isValid &= await validator.ValidateAsync(serviceProvider, context, obj);
 			return isValid;
 		}
+
+		Task<bool> IValidator<TClass>.ValidateAsync(IServiceProvider serviceProvider, IValidationContext context, TClass obj) =>
+			ValidateAsync(serviceProvider, context, obj);
 	}
 }

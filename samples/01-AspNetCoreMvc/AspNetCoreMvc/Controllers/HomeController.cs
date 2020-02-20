@@ -40,8 +40,6 @@ namespace AspNetCoreMvc.Controllers
 					}
 				}
 			};
-			var personValidator = new PersonValidator();
-			await (personValidator as IValidator<Person>).ValidateAsync(null, null, person);
 			return View();
 		}
 

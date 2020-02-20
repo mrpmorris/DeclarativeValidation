@@ -15,7 +15,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			ConditionEvaluator = conditionEvaluator;
 		}
 
-		public override async Task<bool> ValidateAsync(
+		protected override async Task<bool> ValidateAsync(
 			IServiceProvider serviceProvider,
 			IValidationContext context,
 			TClass obj)
@@ -29,5 +29,4 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			return await base.ValidateAsync(serviceProvider, context, obj);
 		}
 	}
-
 }
