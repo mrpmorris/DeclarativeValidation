@@ -7,7 +7,7 @@ using PeterLeslieMorris.DeclarativeValidation.Extensions;
 
 namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 {
-	internal class ForEachValidator<TParentClass, TElementEnumerable, TElement> : ClassValidator<TParentClass>, IValidator<TParentClass>
+	internal class SwitchForEachValidator<TParentClass, TElementEnumerable, TElement> : ClassValidator<TParentClass>, IValidator<TParentClass>
 		where TElementEnumerable: IEnumerable<TElement>
 	{
 		private readonly string MemberPath;
@@ -15,7 +15,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 		private readonly Expression<Func<TParentClass, IEnumerable<TElement>>> Member;
 		internal readonly ClassValidator<TElement> ElementValidator;
 
-		public ForEachValidator(
+		public SwitchForEachValidator(
 			Expression<Func<TParentClass, IEnumerable<TElement>>> member)
 		{
 			Member = member;
@@ -37,7 +37,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 				return true;
 
 			string[] newMemberPath =
-				(new List<string>(memberPathSoFar).Append(MemberPath)).ToArray();
+				new List<string>(memberPathSoFar).Append(MemberPath).ToArray();
 
 			int lastPathIndex = newMemberPath.Length - 1;
 			string lastPathValue = newMemberPath[lastPathIndex];

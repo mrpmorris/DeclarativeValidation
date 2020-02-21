@@ -21,8 +21,8 @@ namespace PeterLeslieMorris.DeclarativeValidation
 
 	public static class NotNullValidatorExtension
 	{
-		public static ClassMemberValidator<TClass, TMember> NotNull<TClass, TMember>(
-			this ClassMemberValidator<TClass, TMember> memberValidator,
+		public static IClassMemberValidator<TClass, TMember> NotNull<TClass, TMember>(
+			this IClassMemberValidator<TClass, TMember> memberValidator,
 			string errorMessage = null,
 			string errorCode = null)
 			where TMember: class

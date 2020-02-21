@@ -1,5 +1,6 @@
 ﻿using System.Reflection.Emit;
 using AspNetCoreMvc.Models;
+using Microsoft.VisualBasic;
 using PeterLeslieMorris.DeclarativeValidation;
 using PeterLeslieMorris.DeclarativeValidation.Definitions;
 
@@ -13,10 +14,20 @@ namespace AspNetCoreMvc.ModelValidators
 
 			//For(x => x.Salutation, v => v.NotNull());
 
-			ForEach(x => x.OtherAddresses, v =>
+			//ForEachValue(x => x.Address.Lines, v =>
+			//{
+			//	v.NotNull();
+			//});
+
+			SwitchForEach(x => x.OtherAddresses, v =>
 			{
-				v.For(x => x.Area, v => v.NotNull());
+				v.ForEachValue(x => x.Lines, v => v.NotNull());
 			});
+
+			//SwitchForEach(x => x.OtherAddresses, v =>
+			//{
+			//	v.For(x => x.Area, v => v.NotNull());
+			//});
 
 			//When(x => x.FamilyName, @is => @is.NotNull(), c => {
 			//	c.For(x => x.GivenName, v => v.NotNull());

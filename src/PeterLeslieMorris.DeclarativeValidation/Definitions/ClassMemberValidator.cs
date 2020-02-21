@@ -8,7 +8,12 @@ using PeterLeslieMorris.DeclarativeValidation.Extensions;
 
 namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 {
-	public class ClassMemberValidator<TClass, TMember> : IValidator<TClass>
+	public interface IClassMemberValidator<TClass, TMember>
+	{
+		void AddValidatorFactory(Func<IServiceProvider, IValueValidator<TMember>> factory);
+	}
+
+	internal class ClassMemberValidator<TClass, TMember> : IValidator<TClass>, IClassMemberValidator<TClass, TMember>
 	{
 		public string MemberName { get; }
 		public string MemberPath { get; }
@@ -67,10 +72,12 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 				bool isValid = await validator.IsValidAsync(memberValue);
 				if (!isValid && context != null)
 				{
-					string memberPath =
-						string.Join(
-							'.',
-							new List<string>(memberPathSoFar).Append(MemberPath));
+					IEnumerable<string> newMemberPathSoFar =
+						memberPathSoFar;
+					if (!string.IsNullOrEmpty(MemberPath))
+						newMemberPathSoFar = newMemberPathSoFar.Append(MemberPath);
+
+					string memberPath = string.Join('.', newMemberPathSoFar);
 
 					var validationError = new ValidationError(
 						memberName: MemberName,

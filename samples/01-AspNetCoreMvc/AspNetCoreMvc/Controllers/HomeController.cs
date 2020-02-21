@@ -32,6 +32,13 @@ namespace AspNetCoreMvc.Controllers
 				EmailAddress = "me",
 				Address = new Address
 				{
+					Lines = new string[]
+					{
+						"a",
+						null,
+						null,
+						"b"
+					},
 					Country = new Country
 					{
 						Code = null,
@@ -40,8 +47,28 @@ namespace AspNetCoreMvc.Controllers
 				},
 				OtherAddresses = new Address[]
 				{
-					new Address { Area = "Okay" },
-					new Address { Area = "Also okay"},
+					new Address
+					{
+						Area = "Okay",
+						Lines = new string[]
+						{
+							"a",
+							null,
+							null,
+							"d"
+						}
+				 },
+					new Address 
+					{
+						Area = "Also okay",
+						Lines = new string[]
+						{
+							null,
+							"b",
+							"c",
+							null
+						}
+					},
 					new Address(),
 					new Address()
 				}
@@ -49,7 +76,7 @@ namespace AspNetCoreMvc.Controllers
 
 			ValidationContext context = await ValidationService.ValidateAsync(person);
 			context.AddErrorsToController(this);
-			
+
 			return View(person);
 		}
 

@@ -15,25 +15,34 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 
 		public void For<TMember>(
 			Expression<Func<TClass, TMember>> member,
-			Action<ClassMemberValidator<TClass, TMember>> validate)
+			Action<IClassMemberValidator<TClass, TMember>> validate)
 		{
 			var classMemberValidator = new ClassMemberValidator<TClass, TMember>(member);
 			Validators.Enqueue(classMemberValidator);
 			validate(classMemberValidator);
 		}
 
-		public void ForEach<TMember>(
+		public void SwitchForEach<TMember>(
 			Expression<Func<TClass, IEnumerable<TMember>>> member,
 			Action<ClassValidator<TMember>> validate)
 		{
-			var subValidator = new ForEachValidator<TClass, IEnumerable<TMember>, TMember>(member);
+			var subValidator = new SwitchForEachValidator<TClass, IEnumerable<TMember>, TMember>(member);
+			Validators.Enqueue(subValidator);
+			validate(subValidator.ElementValidator);
+		}
+
+		public void ForEachValue<TElement>(
+			Expression<Func<TClass, IEnumerable<TElement>>> member,
+			Action<IClassMemberValidator<TElement, TElement>> validate)
+		{
+			var subValidator = new ForEachValueValidator<TClass, TElement>(member);
 			Validators.Enqueue(subValidator);
 			validate(subValidator.ElementValidator);
 		}
 
 		public void SwitchWhen<TMember>(
 			Expression<Func<TClass, TMember>> member,
-			Action<ClassMemberValidator<TClass, TMember>> condition,
+			Action<IClassMemberValidator<TClass, TMember>> condition,
 			Action<ClassValidator<TMember>> validate)
 		{
 			var conditionEvaluator = new ClassMemberValidator<TClass, TMember>(member);
@@ -45,7 +54,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 
 		public void When<TMember>(
 			Expression<Func<TClass, TMember>> member,
-			Action<ClassMemberValidator<TClass, TMember>> condition,
+			Action<IClassMemberValidator<TClass, TMember>> condition,
 			Action<ClassValidator<TClass>> validate)
 		{
 			var conditionEvaluator = new ClassMemberValidator<TClass, TMember>(member);

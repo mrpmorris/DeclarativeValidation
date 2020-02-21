@@ -23,6 +23,16 @@
 			Area = @address.Area
 			@Html.ValidationMessageFor(x => x.OtherAddresses[index].Area)
 		</div>
-		
+		@if (address.Lines != null)
+		{
+			<ul>
+				@{ int lineIndex = -1; }
+				@foreach (string line in address.Lines)
+				{
+					lineIndex++;
+					<li>Line = @line @Html.ValidationMessageFor(x => x.OtherAddresses[index].Lines[lineIndex])</li>
+				}
+			</ul>
+		}
 	}
 }
