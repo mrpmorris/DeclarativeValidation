@@ -1,14 +1,14 @@
 ﻿using System.Threading.Tasks;
 using Xunit;
 
-namespace PeterLeslieMorris.DeclarativeValidation.UnitTests.ValidatorTests
+namespace PeterLeslieMorris.DeclarativeValidation.UnitTests
 {
-	public class IsNullValidatorTests
+	public class ValidateIsNullTests
 	{
 		[Fact]
 		public async Task IsValidAsync_ReturnsTrue_WhenValueIsNull()
 		{
-			var validator = new IsNullValidator<string>();
+			var validator = new ValidateIsNull<string>();
 			bool isValid = await validator.IsValidAsync(null);
 			Assert.True(isValid);
 		}
@@ -16,7 +16,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.UnitTests.ValidatorTests
 		[Fact]
 		public async Task IsValidAsync_ReturnsFalse_WhenHasValue()
 		{
-			var validator = new IsNullValidator<string>();
+			var validator = new ValidateIsNull<string>();
 			bool isValid = await validator.IsValidAsync("Hello");
 			Assert.False(isValid);
 		}

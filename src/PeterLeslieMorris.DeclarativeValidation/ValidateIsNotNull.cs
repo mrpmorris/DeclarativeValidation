@@ -3,31 +3,31 @@ using PeterLeslieMorris.DeclarativeValidation.Definitions;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	public class IsNullValidator<TMember> : IValueValidator<TMember>
-		where TMember: class
+	public class ValidateIsNotNull<TMember> : IValueValidator<TMember>
+		where TMember : class
 	{
 		public string ErrorCode { get; }
 		public string ErrorMessage { get; }
 
-		public IsNullValidator(string errorCode = null, string errorMessage = null)
+		public ValidateIsNotNull(string errorCode = null, string errorMessage = null)
 		{
 			ErrorCode = errorCode;
-			ErrorMessage = errorMessage ?? "Should be null";
+			ErrorMessage = errorMessage ?? "Required";
 		}
 
 		public Task<bool> IsValidAsync(TMember value) =>
-			Task.FromResult(value == null);
+			Task.FromResult(value != null);
 	}
 
-	public static class IsNullValidatorExtension
+	public static class NotNullValidatorExtension
 	{
-		public static IClassMemberValidator<TClass, TMember> IsNull<TClass, TMember>(
+		public static IClassMemberValidator<TClass, TMember> IsNotNull<TClass, TMember>(
 			this IClassMemberValidator<TClass, TMember> memberValidator,
 			string errorMessage = null,
 			string errorCode = null)
-			where TMember: class
+			where TMember : class
 		{
-			var validator = new IsNullValidator<TMember>(
+			var validator = new ValidateIsNotNull<TMember>(
 				errorCode: errorCode,
 				errorMessage: errorMessage);
 			memberValidator.AddValidatorFactory(sp => validator);
