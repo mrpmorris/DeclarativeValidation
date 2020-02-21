@@ -1,0 +1,106 @@
+﻿Rename TClass to TOwner or TObject
+
+IsEqualTo / IsNotEqualTo
+======================
+		public static MemberRuleBuilder<TClass, TProperty> IsEqualTo<TClass, TProperty, TOtherProperty>(
+				this MemberRuleBuilder<TClass, TProperty> builder,
+				Expression<Func<TClass, TOtherProperty>> other,
+				string errorCode = null,
+				string errorMessageFormat = null
+			)
+			where TProperty : IEquatable<TOtherProperty>
+
+IsGreaterThan / IsNotGreaterThan
+================================
+		public static MemberRuleBuilder<TClass, TProperty> IsGreaterThan<TClass, TProperty>(
+				this MemberRuleBuilder<TClass, TProperty> builder,
+				TProperty value,
+				string errorCode = null,
+				string errorMessageFormat = null
+			)
+			where TProperty : IComparable<TProperty>
+
+		public static MemberRuleBuilder<TClass, TProperty> IsGreaterThan<TClass, TProperty, TOtherProperty>(
+				this MemberRuleBuilder<TClass, TProperty> builder,
+				Expression<Func<TClass, TOtherProperty>> other,
+				string errorCode = null,
+				string errorMessageFormat = null
+			)
+			where TProperty : IComparable<TOtherProperty>
+
+IsLessThan / IsNotLessThan
+==========================
+		public static MemberRuleBuilder<TClass, TProperty> IsLessThan<TClass, TProperty>(
+				this MemberRuleBuilder<TClass, TProperty> builder,
+				TProperty value,
+				string errorCode = null,
+				string errorMessageFormat = null)
+			where TProperty : IComparable<TProperty>
+
+		public static MemberRuleBuilder<TClass, TProperty> IsLessThan<TClass, TProperty, TOtherProperty>(
+				this MemberRuleBuilder<TClass, TProperty> builder,
+				Expression<Func<TClass, TOtherProperty>> other,
+				string errorCode = null,
+				string errorMessageFormat = null
+			)
+			where TProperty : IComparable<TOtherProperty>
+
+Contains / DoesNotContain
+=========================
+(Value in IEnumerable<TValue>)
+(Member in IEnumerable<TMember>)
+
+IsEmailAddress / IsNotEmailAddress
+==================================
+(string)
+
+IsUrl / IsNotUrl
+================
+(string)
+
+IsEnumName / IsNotEnumName
+==========================
+
+IsEnumDescription / IsNotEnumDescription
+========================================
+
+IsMonetaryValue / IsNotMonetaryValue (culture specific)
+=======================================================
+
+HasValue / HasNoValue (nullables)
+=================================
+
+HasMinimumDecimalPlaces / HasNotMinimumDecimalPlaces
+====================================================
+float/decimal
+
+HasMaximumDecimalPlaces / HasNotMaximumDecimalPlaces
+====================================================
+float/decimal
+
+IsDate / IsNotDate (culture specific)
+=====================================
+string
+
+IsIsoDate / IsNotIsoDate
+========================
+string
+
+MatchesRegularExpression / DoesNotMatchRegularExpression
+========================================================
+string
+
+IsIntegerNumber / IsNotIntegerNumber
+====================================
+string
+
+IsDecimalNumber / IsNotDecimalNumber
+====================================
+string
+
+IsCreditCardNumber / IsNotCreditCardNumber
+==========================================
+string
+
+IsWhiteSpace / IsNotWhiteSpace
+==============================
