@@ -78,24 +78,8 @@ HasMaximumDecimalPlaces / HasNotMaximumDecimalPlaces
 ====================================================
 float/decimal
 
-IsDate / IsNotDate (culture specific)
-=====================================
-string
-
-IsIsoDate / IsNotIsoDate
-========================
-string
-
 MatchesRegularExpression / DoesNotMatchRegularExpression
 ========================================================
-string
-
-IsIntegerNumber / IsNotIntegerNumber
-====================================
-string
-
-IsDecimalNumber / IsNotDecimalNumber
-====================================
 string
 
 IsCreditCardNumber / IsNotCreditCardNumber
