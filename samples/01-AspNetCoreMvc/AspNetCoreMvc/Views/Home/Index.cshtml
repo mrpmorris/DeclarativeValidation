@@ -3,36 +3,4 @@
 }
 @model Person
 
-<div class="text-center">
-	<h1 class="display-4">Welcome</h1>
-	<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-<p>
-	Address.Country.Code = @Html.ValidationMessageFor(x => x.Address.Country.Code)
-</p>
-<p>
-	Address.Country.Name = @Html.ValidationMessageFor(x => x.Address.Country.Name)
-</p>
-@if (Model.OtherAddresses != null)
-{
-	int index = -1;
-	foreach (Address address in Model.OtherAddresses)
-	{
-		index++;
-		<div>
-			Area = @address.Area
-			@Html.ValidationMessageFor(x => x.OtherAddresses[index].Area)
-		</div>
-		@if (address.Lines != null)
-		{
-			<ul>
-				@{ int lineIndex = -1; }
-				@foreach (string line in address.Lines)
-				{
-					lineIndex++;
-					<li>Line = @line @Html.ValidationMessageFor(x => x.OtherAddresses[index].Lines[lineIndex])</li>
-				}
-			</ul>
-		}
-	}
-}
+Error = @Html.ValidationMessageFor(x => x.Address.Lines)

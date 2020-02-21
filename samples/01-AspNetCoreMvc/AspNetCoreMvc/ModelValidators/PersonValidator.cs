@@ -1,4 +1,5 @@
 ﻿using AspNetCoreMvc.Models;
+using PeterLeslieMorris.DeclarativeValidation;
 using PeterLeslieMorris.DeclarativeValidation.Definitions;
 
 namespace AspNetCoreMvc.ModelValidators
@@ -7,6 +8,7 @@ namespace AspNetCoreMvc.ModelValidators
 	{
 		public PersonValidator()
 		{
+			For(x => x.Address.Lines, v => v.IsNotNull().HasMinLength(4));
 		}
 	}
 }

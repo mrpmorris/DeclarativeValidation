@@ -19,7 +19,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 			Task.FromResult(value == null);
 	}
 
-	public static class IsNullValidatorExtension
+	public static class ValidateIsNullExtension
 	{
 		public static IClassMemberValidator<TClass, TMember> IsNull<TClass, TMember>(
 			this IClassMemberValidator<TClass, TMember> memberValidator,
