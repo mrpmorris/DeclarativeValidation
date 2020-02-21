@@ -10,7 +10,6 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 	internal class ForEachValidator<TParentClass, TElementEnumerable, TElement> : ClassValidator<TParentClass>, IValidator<TParentClass>
 		where TElementEnumerable: IEnumerable<TElement>
 	{
-		private readonly string MemberName;
 		private readonly string MemberPath;
 		private readonly Func<TParentClass, IEnumerable<TElement>> GetElements;
 		private readonly Expression<Func<TParentClass, IEnumerable<TElement>>> Member;
@@ -20,7 +19,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			Expression<Func<TParentClass, IEnumerable<TElement>>> member)
 		{
 			Member = member;
-			(MemberName, MemberPath) = member.GetMemberNameAndPath();
+			(_, MemberPath) = member.GetMemberNameAndPath();
 			GetElements = member.Compile();
 			ElementValidator = new ClassValidator<TElement>();
 		}
