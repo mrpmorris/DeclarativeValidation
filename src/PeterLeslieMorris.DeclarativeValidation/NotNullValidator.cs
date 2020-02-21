@@ -9,7 +9,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 		public string ErrorCode { get; }
 		public string ErrorMessage { get; }
 
-		public NotNullValidator(string errorCode, string errorMessage)
+		public NotNullValidator(string errorCode = null, string errorMessage = null)
 		{
 			ErrorCode = errorCode;
 			ErrorMessage = errorMessage ?? "Required";
