@@ -26,12 +26,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 
 			ValidatorFactories = new ConcurrentQueue<Func<IServiceProvider, IValueValidator<TMember>>>();
 			GetValue = member.Compile();
-			MemberPath = member.GetMemberPath();
-
-			int lastDotIndex = MemberPath.LastIndexOf('.');
-			MemberName = lastDotIndex == -1
-				? MemberPath
-				: MemberPath.Remove(0, lastDotIndex + 1);
+			(MemberName, MemberPath) = member.GetMemberNameAndPath();
 
 			LazyGetOwner = new Lazy<Func<TClass, object>>(
 				() =>

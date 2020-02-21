@@ -6,7 +6,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Extensions
 {
 	internal static class ExpressionExtensions
 	{
-		public static string GetMemberPath<TClass, TMember>(
+		public static (string memberName, string memberPath) GetMemberNameAndPath<TClass, TMember>(
 			this Expression<Func<TClass, TMember>> member)
 		{
 			// https://stackoverflow.com/questions/1667408/c-getting-names-of-properties-in-a-chain-from-lambda-expression
@@ -31,7 +31,13 @@ namespace PeterLeslieMorris.DeclarativeValidation.Extensions
 				parts.Push(propertyName);
 				me = me.Expression as MemberExpression;
 			}
-			return string.Join('.', parts);
+			string memberPath = string.Join('.', parts);
+			int lastDotIndex = memberPath.LastIndexOf('.');
+			string memberName = lastDotIndex < 0
+				? memberPath
+				: memberPath.Remove(0, lastDotIndex + 1);
+
+			return (memberName, memberPath);
 		}
 
 		public static void ParseAccessor<TClass, TMember>(

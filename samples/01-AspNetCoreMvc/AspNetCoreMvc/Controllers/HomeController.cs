@@ -37,13 +37,20 @@ namespace AspNetCoreMvc.Controllers
 						Code = null,
 						Name = null
 					}
+				},
+				OtherAddresses = new Address[]
+				{
+					new Address { Area = "Okay" },
+					new Address { Area = "Also okay"},
+					new Address(),
+					new Address()
 				}
 			};
 
 			ValidationContext context = await ValidationService.ValidateAsync(person);
 			context.AddErrorsToController(this);
 			
-			return View();
+			return View(person);
 		}
 
 		public IActionResult Privacy()

@@ -13,3 +13,16 @@
 <p>
 	Address.Country.Name = @Html.ValidationMessageFor(x => x.Address.Country.Name)
 </p>
+@if (Model.OtherAddresses != null)
+{
+	int index = -1;
+	foreach (Address address in Model.OtherAddresses)
+	{
+		index++;
+		<div>
+			Area = @address.Area
+			@Html.ValidationMessageFor(x => x.OtherAddresses[index].Area)
+		</div>
+		
+	}
+}

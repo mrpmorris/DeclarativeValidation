@@ -13,7 +13,10 @@ namespace AspNetCoreMvc.ModelValidators
 
 			//For(x => x.Salutation, v => v.NotNull());
 
-			ForEach(x => x.Address.Lines, v => v.NotNull());
+			ForEach(x => x.OtherAddresses, v =>
+			{
+				v.For(x => x.Area, v => v.NotNull());
+			});
 
 			//When(x => x.FamilyName, @is => @is.NotNull(), c => {
 			//	c.For(x => x.GivenName, v => v.NotNull());
