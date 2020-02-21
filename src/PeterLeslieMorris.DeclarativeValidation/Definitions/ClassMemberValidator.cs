@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using PeterLeslieMorris.DeclarativeValidation.Extensions;
 
@@ -44,6 +45,9 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			ValidatorFactories.Enqueue(factory);
 		}
 
+		Task<bool> IValidator.ValidateAsync(IServiceProvider serviceProvider, IValidationContext context, object obj)
+			=> (this as IValidator<TClass>).ValidateAsync(serviceProvider, context, obj);
+
 		async Task<bool> IValidator<TClass>.ValidateAsync(
 			IServiceProvider serviceProvider,
 			IValidationContext context,
@@ -55,7 +59,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 				IValueValidator<TMember> validator =
 					validatorFactory(serviceProvider);
 				bool isValid = await validator.IsValidAsync(memberValue);
-				if (!isValid)
+				if (!isValid && context != null)
 				{
 					var validationError = new ValidationError(
 						memberName: MemberName,
@@ -63,6 +67,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 						errorCode: validator.ErrorCode,
 						errorMessage: validator.ErrorMessage,
 						() => new MemberIdentifier(GetOwner(obj), MemberName));
+					context.AddError(validationError);
 					return false;
 				};
 			}

@@ -4,21 +4,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AspNetCoreMvc.Models;
 using PeterLeslieMorris.DeclarativeValidation;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace AspNetCoreMvc.Controllers
 {
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> Logger;
-		private readonly IValidatorRepository ClassValidatorRepository;
+		private readonly IValidationService ValidationService;
 
 		public HomeController(
 			ILogger<HomeController> logger,
-			IValidatorRepository classValidatorRepository)
+			IValidationService validationService)
 		{
 			Logger = logger;
-			ClassValidatorRepository = classValidatorRepository;
+			ValidationService = validationService;
 		}
 
 		public async Task<IActionResult> Index()
@@ -33,19 +33,16 @@ namespace AspNetCoreMvc.Controllers
 				{
 					Country = new Country
 					{
-						Code = "GB",
+						Code = null,
 						Name = "Great Britain"
 					}
 				}
 			};
-			
-			var validators = ClassValidatorRepository.GetValidators<Person>();
-			bool isValid = true;
-			foreach(IValidator<Person> validator in validators)
-			{
-				isValid &= await validator.ValidateAsync(null, null, person);
-			}
 
+			ValidationContext context = await ValidationService.ValidateAsync(person);
+			bool isValid = context.IsValid;
+			MemberIdentifier mi = context.Errors.First().GetMemberIdentifier();
+			
 			return View();
 		}
 

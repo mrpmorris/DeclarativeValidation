@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using PeterLeslieMorris.DeclarativeValidation.Definitions;
 
@@ -29,6 +28,8 @@ namespace PeterLeslieMorris.DeclarativeValidation
 				.Select(x => Activator.CreateInstance(x))
 				.Cast<IValidator>()
 				.ToArray();
+
+			services.AddTransient<IValidationService, ValidationService>();
 
 			services.AddSingleton<IValidatorRepository, ValidatorRepository>(sp =>
 			{

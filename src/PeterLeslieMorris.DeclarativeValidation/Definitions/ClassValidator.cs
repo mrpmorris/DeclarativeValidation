@@ -45,6 +45,9 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			validate(subValidator);
 		}
 
+		Task<bool> IValidator.ValidateAsync(IServiceProvider serviceProvider, IValidationContext context, object obj)
+			=> ValidateAsync(serviceProvider, context, (TClass)obj);
+
 		protected virtual async Task<bool> ValidateAsync(
 			IServiceProvider serviceProvider,
 			IValidationContext context,
