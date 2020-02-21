@@ -3,13 +3,13 @@ using PeterLeslieMorris.DeclarativeValidation.Definitions;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	public class NotNullValidator<TMember> : IValueValidator<TMember>
+	public class IsNotNullValidator<TMember> : IValueValidator<TMember>
 		where TMember: class
 	{
 		public string ErrorCode { get; }
 		public string ErrorMessage { get; }
 
-		public NotNullValidator(string errorCode = null, string errorMessage = null)
+		public IsNotNullValidator(string errorCode = null, string errorMessage = null)
 		{
 			ErrorCode = errorCode;
 			ErrorMessage = errorMessage ?? "Required";
@@ -21,13 +21,13 @@ namespace PeterLeslieMorris.DeclarativeValidation
 
 	public static class NotNullValidatorExtension
 	{
-		public static IClassMemberValidator<TClass, TMember> NotNull<TClass, TMember>(
+		public static IClassMemberValidator<TClass, TMember> IsNotNull<TClass, TMember>(
 			this IClassMemberValidator<TClass, TMember> memberValidator,
 			string errorMessage = null,
 			string errorCode = null)
 			where TMember: class
 		{
-			var validator = new NotNullValidator<TMember>(
+			var validator = new IsNotNullValidator<TMember>(
 				errorCode: errorCode,
 				errorMessage: errorMessage);
 			memberValidator.AddValidatorFactory(sp => validator);

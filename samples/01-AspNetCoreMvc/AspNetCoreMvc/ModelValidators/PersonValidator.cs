@@ -19,9 +19,16 @@ namespace AspNetCoreMvc.ModelValidators
 			//	v.NotNull();
 			//});
 
+			When(x => x.Salutation, it => it.IsNull(), v =>
+			{
+
+			});
+
+			For(x => x.Salutation, it => it.IsNotNull());
+
 			SwitchForEach(x => x.OtherAddresses, v =>
 			{
-				v.ForEachValue(x => x.Lines, v => v.NotNull());
+				v.ForEachValue(x => x.Lines, v => v.IsNotNull());
 			});
 
 			//SwitchForEach(x => x.OtherAddresses, v =>
