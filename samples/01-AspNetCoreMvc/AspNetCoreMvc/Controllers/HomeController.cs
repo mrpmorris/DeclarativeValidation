@@ -32,7 +32,7 @@ namespace AspNetCoreMvc.Controllers
 				EmailAddress = "me",
 				Address = new Address
 				{
-					Lines = System.Array.Empty<string>(),
+					Lines = new string[] { "1", "2", "3", "4" },
 					Country = new Country
 					{
 						Code = null,

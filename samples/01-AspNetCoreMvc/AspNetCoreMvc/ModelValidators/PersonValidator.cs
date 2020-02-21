@@ -8,7 +8,7 @@ namespace AspNetCoreMvc.ModelValidators
 	{
 		public PersonValidator()
 		{
-			For(x => x.Address.Lines, v => v.IsNotNull().HasMinLength(4));
+			For(x => x.Address.Lines, v => v.IsNotNull().HasMinLength(4).HasMaxLength(3));
 		}
 	}
 }
