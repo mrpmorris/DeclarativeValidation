@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 {
-	public abstract class ClassValidator<TClass> : IValidator<TClass>
+	public class ClassValidator<TClass> : IValidator<TClass>
 	{
 		private readonly ConcurrentQueue<IValidator<TClass>> Validators =
 			new ConcurrentQueue<IValidator<TClass>>();
@@ -19,6 +20,15 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			var classMemberValidator = new ClassMemberValidator<TClass, TMember>(member);
 			Validators.Enqueue(classMemberValidator);
 			validate(classMemberValidator);
+		}
+
+		public void ForEach<TMember>(
+			Expression<Func<TClass, IEnumerable<TMember>>> member,
+			Action<ClassValidator<TMember>> validate)
+		{
+			var subValidator = new ForEachValidator<TClass, IEnumerable<TMember>, TMember>(member);
+			Validators.Enqueue(subValidator);
+			validate(subValidator.ElementValidator);
 		}
 
 		public void SwitchWhen<TMember>(

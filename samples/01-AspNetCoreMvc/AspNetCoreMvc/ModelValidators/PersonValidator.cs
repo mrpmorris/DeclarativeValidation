@@ -9,21 +9,23 @@ namespace AspNetCoreMvc.ModelValidators
 	{
 		public PersonValidator()
 		{
-			For(x => x.Address.Country.Name, v => v.NotNull("Must have a name"));
+			//For(x => x.Address.Country.Name, v => v.NotNull("Must have a name"));
 
-			For(x => x.Salutation, v => v.NotNull());
+			//For(x => x.Salutation, v => v.NotNull());
 
-			When(x => x.FamilyName, @is => @is.NotNull(), c => {
-				c.For(x => x.GivenName, v => v.NotNull());
-			});
+			ForEach(x => x.Address.Lines, v => v.NotNull());
 
-			SwitchWhen(x => x.Address, @is => @is.NotNull(), address =>
-			{
-				address.SwitchWhen(x => x.Country, its => its.NotNull(), country =>
-				{
-					country.For(x => x.Code, v => v.NotNull("Must have a code"));
-				});
-			});
+			//When(x => x.FamilyName, @is => @is.NotNull(), c => {
+			//	c.For(x => x.GivenName, v => v.NotNull());
+			//});
+
+			//SwitchWhen(x => x.Address, @is => @is.NotNull(), address =>
+			//{
+			//	address.SwitchWhen(x => x.Country, its => its.NotNull(), country =>
+			//	{
+			//		country.For(x => x.Code, v => v.NotNull("Must have a code"));
+			//	});
+			//});
 		}
 	}
 }
