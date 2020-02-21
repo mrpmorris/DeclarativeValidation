@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using AspNetCoreMvc.Models;
 using PeterLeslieMorris.DeclarativeValidation;
 using System.Linq;
+using AspNetCoreMvc.Extensions;
 
 namespace AspNetCoreMvc.Controllers
 {
@@ -34,14 +35,13 @@ namespace AspNetCoreMvc.Controllers
 					Country = new Country
 					{
 						Code = null,
-						Name = "Great Britain"
+						Name = null
 					}
 				}
 			};
 
 			ValidationContext context = await ValidationService.ValidateAsync(person);
-			bool isValid = context.IsValid;
-			MemberIdentifier mi = context.Errors.First().GetMemberIdentifier();
+			context.AddErrorsToController(this);
 			
 			return View();
 		}

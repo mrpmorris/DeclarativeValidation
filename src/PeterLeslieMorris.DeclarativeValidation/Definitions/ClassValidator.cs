@@ -45,21 +45,38 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			validate(subValidator);
 		}
 
-		Task<bool> IValidator.ValidateAsync(IServiceProvider serviceProvider, IValidationContext context, object obj)
-			=> ValidateAsync(serviceProvider, context, (TClass)obj);
+		Task<bool> IValidator.ValidateAsync(
+			IServiceProvider serviceProvider,
+			IValidationContext context,
+			string[] memberPathSoFar,
+			object obj)
+			=> ValidateAsync(
+					serviceProvider,
+					context,
+					memberPathSoFar,
+					(TClass)obj);
 
 		protected virtual async Task<bool> ValidateAsync(
 			IServiceProvider serviceProvider,
 			IValidationContext context,
+			string[] memberPathSoFar,
 			TClass obj)
 		{
 			bool isValid = true;
 			foreach (var validator in Validators)
-				isValid &= await validator.ValidateAsync(serviceProvider, context, obj);
+				isValid &= await validator.ValidateAsync(
+					serviceProvider,
+					context,
+					memberPathSoFar,
+					obj);
 			return isValid;
 		}
 
-		Task<bool> IValidator<TClass>.ValidateAsync(IServiceProvider serviceProvider, IValidationContext context, TClass obj) =>
-			ValidateAsync(serviceProvider, context, obj);
+		Task<bool> IValidator<TClass>.ValidateAsync(
+			IServiceProvider serviceProvider,
+			IValidationContext context,
+			string[] memberPathSoFar,
+			TClass obj)
+			=> ValidateAsync(serviceProvider, context, memberPathSoFar, obj);
 	}
 }

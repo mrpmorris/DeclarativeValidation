@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using PeterLeslieMorris.DeclarativeValidation.Extensions;
 
@@ -27,7 +27,12 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			ValidatorFactories = new ConcurrentQueue<Func<IServiceProvider, IValueValidator<TMember>>>();
 			GetValue = member.Compile();
 			MemberPath = member.GetMemberPath();
-			MemberName = MemberPath.Split('.').Last();
+
+			int lastDotIndex = MemberPath.LastIndexOf('.');
+			MemberName = lastDotIndex == -1
+				? MemberPath
+				: MemberPath.Remove(0, lastDotIndex + 1);
+
 			LazyGetOwner = new Lazy<Func<TClass, object>>(
 				() =>
 				{
@@ -45,12 +50,18 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			ValidatorFactories.Enqueue(factory);
 		}
 
-		Task<bool> IValidator.ValidateAsync(IServiceProvider serviceProvider, IValidationContext context, object obj)
-			=> (this as IValidator<TClass>).ValidateAsync(serviceProvider, context, obj);
+		Task<bool> IValidator.ValidateAsync(
+			IServiceProvider serviceProvider,
+			IValidationContext context,
+			string[] memberPathSoFar,
+			object obj)
+			=> (this as IValidator<TClass>)
+			.ValidateAsync(serviceProvider, context, memberPathSoFar, obj);
 
 		async Task<bool> IValidator<TClass>.ValidateAsync(
 			IServiceProvider serviceProvider,
 			IValidationContext context,
+			string[] memberPathSoFar,
 			TClass obj)
 		{
 			TMember memberValue = GetValue(obj);
@@ -61,9 +72,14 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 				bool isValid = await validator.IsValidAsync(memberValue);
 				if (!isValid && context != null)
 				{
+					string memberPath =
+						string.Join(
+							'.',
+							new List<string>(memberPathSoFar).Append(MemberPath));
+
 					var validationError = new ValidationError(
 						memberName: MemberName,
-						memberPath: MemberPath,
+						memberPath: memberPath,
 						errorCode: validator.ErrorCode,
 						errorMessage: validator.ErrorMessage,
 						() => new MemberIdentifier(GetOwner(obj), MemberName));

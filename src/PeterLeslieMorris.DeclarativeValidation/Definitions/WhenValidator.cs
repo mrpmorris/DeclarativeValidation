@@ -18,15 +18,22 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 		protected override async Task<bool> ValidateAsync(
 			IServiceProvider serviceProvider,
 			IValidationContext context,
+			string[] memberPathSoFar,
 			TClass obj)
 		{
 			bool conditionMet =
 				await (ConditionEvaluator as IValidator<TClass>).ValidateAsync(
 					serviceProvider,
-					context, obj);
+					context,
+					memberPathSoFar,
+					obj);
 			if (!conditionMet)
 				return true;
-			return await base.ValidateAsync(serviceProvider, context, obj);
+			return await base.ValidateAsync(
+				serviceProvider,
+				context,
+				memberPathSoFar,
+				obj);
 		}
 	}
 }

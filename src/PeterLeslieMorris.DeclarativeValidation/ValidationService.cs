@@ -36,7 +36,11 @@ namespace PeterLeslieMorris.DeclarativeValidation
 
 			Type classToValidate = obj.GetType();
 			foreach (IValidator validator in ValidatorRepository.GetValidators(classToValidate))
-				await validator.ValidateAsync(ServiceProvider, context, obj);
+				await validator.ValidateAsync(
+					ServiceProvider,
+					context,
+					memberPathSoFar: Array.Empty<string>(),
+					obj: obj);
 
 			return context;
 		}

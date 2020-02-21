@@ -9,6 +9,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 		Task<bool> ValidateAsync(
 			IServiceProvider serviceProvider,
 			IValidationContext context,
+			string[] memberPathSoFar,
 			object obj);
 	}
 
@@ -17,6 +18,7 @@ namespace PeterLeslieMorris.DeclarativeValidation
 		Task<bool> ValidateAsync(
 			IServiceProvider serviceProvider,
 			IValidationContext context,
+			string[] memberPathSoFar,
 			TClass obj);
 	}
 }

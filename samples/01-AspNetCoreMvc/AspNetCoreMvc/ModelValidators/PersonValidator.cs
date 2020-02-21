@@ -9,6 +9,8 @@ namespace AspNetCoreMvc.ModelValidators
 	{
 		public PersonValidator()
 		{
+			For(x => x.Address.Country.Name, v => v.NotNull("Must have a name"));
+
 			For(x => x.Salutation, v => v.NotNull());
 
 			When(x => x.FamilyName, @is => @is.NotNull(), c => {
@@ -19,7 +21,7 @@ namespace AspNetCoreMvc.ModelValidators
 			{
 				address.SwitchWhen(x => x.Country, its => its.NotNull(), country =>
 				{
-					country.For(x => x.Code, v => v.NotNull());
+					country.For(x => x.Code, v => v.NotNull("Must have a code"));
 				});
 			});
 		}
