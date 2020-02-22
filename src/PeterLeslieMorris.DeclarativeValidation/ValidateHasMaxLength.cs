@@ -6,42 +6,26 @@ using PeterLeslieMorris.DeclarativeValidation.Definitions;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	public class ValidateHasMaxLength<TValue> : IValueValidator<TValue>
-		where TValue : IEnumerable
-	{
-		public int MaximumLength { get; }
-		public string ErrorCode { get; }
-		public string ErrorMessage => string.Format(ErrorMessageFormat, MaximumLength);
-		public string ErrorMessageFormat { get; }
-
-		public ValidateHasMaxLength(int maximumLength, string errorCode = null, string errorMessageFormat = null)
-		{
-			if (maximumLength < 0)
-				throw new ArgumentOutOfRangeException("Cannot be less than 0", nameof(maximumLength));
-
-			MaximumLength = maximumLength;
-			ErrorCode = errorCode;
-			ErrorMessageFormat = errorMessageFormat ?? "Cannot be more than {0} in length";
-		}
-
-		public Task<bool> IsValidAsync(TValue value) =>
-			Task.FromResult(value.OfType<object>().Count() <= MaximumLength);
-	}
-
 	public static class ValidateHasMaxLengthExtension
 	{
 		public static IClassMemberValidator<TClass, TMember> HasMaxLength<TClass, TMember>(
 			this IClassMemberValidator<TClass, TMember> memberValidator,
 			int maximumLength,
-			string errorMessageFormat = null,
-			string errorCode = null)
-			where TMember: IEnumerable
+			Func<TMember, string> getErrorMessage = null,
+			string errorCode = nameof(HasMaxLength))
+			where TMember : IEnumerable
 		{
-			var validator = new ValidateHasMaxLength<TMember>(
-				maximumLength: maximumLength,
-				errorMessageFormat: errorMessageFormat,
-				errorCode: errorCode);
-			memberValidator.AddValidatorFactory(sp => validator);
+			if (maximumLength < 0)
+				throw new ArgumentOutOfRangeException(nameof(maximumLength), "Cannot be less than 0");
+
+			const string DefaultErrorMessageFormat = "Cannot be more than {0} in length.";
+
+			var ruleEvaluator = new RuleEvaluator<TMember>(
+				errorCode: errorCode,
+				getErrorMessage: getErrorMessage ?? (value => string.Format(DefaultErrorMessageFormat, maximumLength)),
+				isValidAsync: value => Task.FromResult(value.OfType<object>().Count() <= maximumLength));
+
+			memberValidator.AddValidatorFactory(sp => ruleEvaluator);
 			return memberValidator;
 		}
 	}

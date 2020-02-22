@@ -13,7 +13,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 		private readonly string MemberPath;
 		private readonly Func<TClass, IEnumerable<TElement>> GetElements;
 		private readonly Expression<Func<TClass, IEnumerable<TElement>>> Member;
-		private ConcurrentQueue<Func<IServiceProvider, IValueValidator<TElement>>> ValidatorFactories;
+		private ConcurrentQueue<Func<IServiceProvider, IRuleEvaluator<TElement>>> RuleEvaluatorFactories;
 		internal readonly ClassMemberValidator<TElement, TElement> ElementValidator;
 
 		Type IValidator.ClassToValidate => typeof(TClass);
@@ -22,10 +22,10 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			Expression<Func<TClass, IEnumerable<TElement>>> member)
 		{
 			Member = member;
-			(_, MemberPath) = member.GetMemberNameAndPath();
-			GetElements = member.Compile();
+			(_, MemberPath) = Member.GetMemberNameAndPath();
+			GetElements = Member.Compile();
 			ElementValidator = new ClassMemberValidator<TElement, TElement>(x => x);
-			ValidatorFactories = new ConcurrentQueue<Func<IServiceProvider, IValueValidator<TElement>>>();
+			RuleEvaluatorFactories = new ConcurrentQueue<Func<IServiceProvider, IRuleEvaluator<TElement>>>();
 		}
 
 		Task<bool> IValidator.ValidateAsync(
@@ -67,11 +67,11 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			return isValid;
 		}
 
-		void IClassMemberValidator<TClass, TElement>.AddValidatorFactory(Func<IServiceProvider, IValueValidator<TElement>> factory)
+		void IClassMemberValidator<TClass, TElement>.AddValidatorFactory(Func<IServiceProvider, IRuleEvaluator<TElement>> factory)
 		{
 			if (factory == null)
 				throw new ArgumentNullException(nameof(factory));
-			ValidatorFactories.Enqueue(factory);
+			RuleEvaluatorFactories.Enqueue(factory);
 		}
 	}
 }

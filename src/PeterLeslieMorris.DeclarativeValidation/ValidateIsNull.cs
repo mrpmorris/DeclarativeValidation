@@ -1,36 +1,23 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using PeterLeslieMorris.DeclarativeValidation.Definitions;
 
 namespace PeterLeslieMorris.DeclarativeValidation
 {
-	public class ValidateIsNull<TMember> : IValueValidator<TMember>
-		where TMember: class
-	{
-		public string ErrorCode { get; }
-		public string ErrorMessage { get; }
-
-		public ValidateIsNull(string errorCode = null, string errorMessage = null)
-		{
-			ErrorCode = errorCode;
-			ErrorMessage = errorMessage ?? "Should be null";
-		}
-
-		public Task<bool> IsValidAsync(TMember value) =>
-			Task.FromResult(value == null);
-	}
-
 	public static class ValidateIsNullExtension
 	{
 		public static IClassMemberValidator<TClass, TMember> IsNull<TClass, TMember>(
 			this IClassMemberValidator<TClass, TMember> memberValidator,
-			string errorMessage = null,
-			string errorCode = null)
-			where TMember: class
+			Func<TMember, string> getErrorMessage = null,
+			string errorCode = nameof(IsNull))
+			where TMember : class
 		{
-			var validator = new ValidateIsNull<TMember>(
+			var ruleEvaluator = new RuleEvaluator<TMember>(
 				errorCode: errorCode,
-				errorMessage: errorMessage);
-			memberValidator.AddValidatorFactory(sp => validator);
+				getErrorMessage: getErrorMessage ?? (value => "Cannot be set"),
+				isValidAsync: value => Task.FromResult(value == null));
+
+			memberValidator.AddValidatorFactory(sp => ruleEvaluator);
 			return memberValidator;
 		}
 	}

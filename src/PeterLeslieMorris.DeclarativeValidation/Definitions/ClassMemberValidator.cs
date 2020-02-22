@@ -10,7 +10,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 {
 	public interface IClassMemberValidator<TClass, TMember>
 	{
-		void AddValidatorFactory(Func<IServiceProvider, IValueValidator<TMember>> factory);
+		void AddValidatorFactory(Func<IServiceProvider, IRuleEvaluator<TMember>> factory);
 	}
 
 	internal class ClassMemberValidator<TClass, TMember> : IValidator<TClass>, IClassMemberValidator<TClass, TMember>
@@ -20,7 +20,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 
 		Type IValidator.ClassToValidate => typeof(TClass);
 		internal Func<TClass, TMember> GetValue { get; }
-		private ConcurrentQueue<Func<IServiceProvider, IValueValidator<TMember>>> ValidatorFactories;
+		private ConcurrentQueue<Func<IServiceProvider, IRuleEvaluator<TMember>>> RuleEvaluatorFactories;
 		private Lazy<Func<TClass, object>> LazyGetOwner { get; }
 		private object GetOwner(TClass source) => LazyGetOwner.Value(source);
 
@@ -29,7 +29,7 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			if (member == null)
 				throw new ArgumentNullException(nameof(member));
 
-			ValidatorFactories = new ConcurrentQueue<Func<IServiceProvider, IValueValidator<TMember>>>();
+			RuleEvaluatorFactories = new ConcurrentQueue<Func<IServiceProvider, IRuleEvaluator<TMember>>>();
 			GetValue = member.Compile();
 			(MemberName, MemberPath) = member.GetMemberNameAndPath();
 
@@ -43,11 +43,11 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 				});
 		}
 
-		public void AddValidatorFactory(Func<IServiceProvider, IValueValidator<TMember>> factory)
+		public void AddValidatorFactory(Func<IServiceProvider, IRuleEvaluator<TMember>> factory)
 		{
 			if (factory == null)
 				throw new ArgumentNullException(nameof(factory));
-			ValidatorFactories.Enqueue(factory);
+			RuleEvaluatorFactories.Enqueue(factory);
 		}
 
 		Task<bool> IValidator.ValidateAsync(
@@ -65,11 +65,10 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 			TClass obj)
 		{
 			TMember memberValue = GetValue(obj);
-			foreach (var validatorFactory in ValidatorFactories)
+			foreach (var ruleEvaluatorFactory in RuleEvaluatorFactories)
 			{
-				IValueValidator<TMember> validator =
-					validatorFactory(serviceProvider);
-				bool isValid = await validator.IsValidAsync(memberValue);
+				IRuleEvaluator<TMember> ruleEvaluator = ruleEvaluatorFactory(serviceProvider);
+				bool isValid = await ruleEvaluator.IsValidAsync(memberValue);
 				if (!isValid && context != null)
 				{
 					IEnumerable<string> newMemberPathSoFar =
@@ -82,8 +81,8 @@ namespace PeterLeslieMorris.DeclarativeValidation.Definitions
 					var validationError = new ValidationError(
 						memberName: MemberName,
 						memberPath: memberPath,
-						errorCode: validator.ErrorCode,
-						errorMessage: validator.ErrorMessage,
+						errorCode: ruleEvaluator.ErrorCode,
+						errorMessage: ruleEvaluator.GetErrorMessage(memberValue),
 						() => new MemberIdentifier(GetOwner(obj), MemberName));
 					context.AddError(validationError);
 					return false;
