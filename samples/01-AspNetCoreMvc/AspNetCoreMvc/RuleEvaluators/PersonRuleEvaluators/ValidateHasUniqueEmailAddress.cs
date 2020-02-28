@@ -15,22 +15,35 @@ namespace AspNetCoreMvc.RuleEvaluators.PersonRuleEvaluators
 		public static void HasUniqueEmailAddress(
 			this ClassValidator<Person> personValidator,
 			Func<string, string> getErrorMessage = null,
-			string errorCode = nameof(HasUniqueEmailAddress))
+			string errorCode = null)
 		{
-			personValidator.AddValidatorFactory(sp => sp.GetRequiredService<PersonHasUniqueEmailAddressValidator>());
+			personValidator.AddValidatorFactory(sp => sp
+				.GetRequiredService<PersonHasUniqueEmailAddressValidator>()
+				.Configure(getErrorMessage: getErrorMessage, errorCode: errorCode));
 		}
 	}
 
-	[Injectable(InjectableScope.Scoped)]
+	[Injectable(InjectableLifetime.Scoped)]
 	public class PersonHasUniqueEmailAddressValidator : IValidator<Person>
 	{
 		public Type ClassToValidate => typeof(Person);
 
+		private Func<string, string> GetErrorMessage;
+		private string ErrorCode;
 		private IPersonRepository PersonRepository;
 
 		public PersonHasUniqueEmailAddressValidator(IPersonRepository personRepository)
 		{
 			PersonRepository = personRepository;
+		}
+
+		public PersonHasUniqueEmailAddressValidator Configure(
+			Func<string, string> getErrorMessage = null,
+			string errorCode = null)
+		{
+			GetErrorMessage = getErrorMessage ?? (_ => "Email address must be unique");
+			ErrorCode = errorCode ?? "HasUniqueEmailAddress";
+			return this;
 		}
 
 		public Task<bool> ValidateAsync(
@@ -43,8 +56,8 @@ namespace AspNetCoreMvc.RuleEvaluators.PersonRuleEvaluators
 			if (count > 0)
 			{
 				context.AddError(new ValidationError(
-					errorCode: nameof(ValidateHasUniqueEmailAddressExtension.HasUniqueEmailAddress),
-					errorMessage: "Email address must be unique",
+					errorCode: ErrorCode,
+					errorMessage: GetErrorMessage(person.EmailAddress),
 					memberName: nameof(Person.EmailAddress),
 					memberPath: String.Join('.', memberPathSoFar.Append(nameof(Person.EmailAddress))),
 					getMemberIdentifier: () => new MemberIdentifier(person, nameof(Person.EmailAddress))));

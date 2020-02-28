@@ -6,33 +6,33 @@ namespace PeterLeslieMorris.DeclarativeValidation.DependencyInjection
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
 	public class InjectableAttribute : Attribute
 	{
-		public readonly InjectableScope Scope;
+		public readonly InjectableLifetime Lifetime;
 
-		public InjectableAttribute(InjectableScope scope)
+		public InjectableAttribute(InjectableLifetime lifetime)
 		{
-			Scope = scope;
+			Lifetime = lifetime;
 		}
 
 		public void Register(IServiceCollection services, Type classType)
 		{
-			switch (Scope)
+			switch (Lifetime)
 			{
-				case InjectableScope.Transient:
+				case InjectableLifetime.Transient:
 					services.AddTransient(classType);
 					break;
-				case InjectableScope.Scoped:
+				case InjectableLifetime.Scoped:
 					services.AddScoped(classType);
 					break;
-				case InjectableScope.Singleton:
+				case InjectableLifetime.Singleton:
 					services.AddSingleton(classType);
 					break;
 				default:
-					throw new NotImplementedException(Scope.ToString());
+					throw new NotImplementedException(Lifetime.ToString());
 			}
 		}
 	}
 
-	public enum InjectableScope
+	public enum InjectableLifetime
 	{
 		Transient,
 		Scoped,
