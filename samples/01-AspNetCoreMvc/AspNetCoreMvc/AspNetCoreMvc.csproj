@@ -5,11 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\PeterLeslieMorris.DeclarativeValidation\PeterLeslieMorris.DeclarativeValidation.csproj" />
+    <Compile Remove="ValidationRules\**" />
+    <Content Remove="ValidationRules\**" />
+    <EmbeddedResource Remove="ValidationRules\**" />
+    <None Remove="ValidationRules\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ValidationRules\" />
+    <ProjectReference Include="..\..\..\src\PeterLeslieMorris.DeclarativeValidation\PeterLeslieMorris.DeclarativeValidation.csproj" />
   </ItemGroup>
 
 

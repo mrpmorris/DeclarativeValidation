@@ -6,6 +6,7 @@ using AspNetCoreMvc.Models;
 using PeterLeslieMorris.DeclarativeValidation;
 using System.Linq;
 using AspNetCoreMvc.Extensions;
+using System.Text.Json;
 
 namespace AspNetCoreMvc.Controllers
 {
@@ -52,7 +53,7 @@ namespace AspNetCoreMvc.Controllers
 							"d"
 						}
 				 },
-					new Address 
+					new Address
 					{
 						Area = "Also okay",
 						Lines = new string[]
@@ -70,6 +71,7 @@ namespace AspNetCoreMvc.Controllers
 
 			ValidationContext context = await ValidationService.ValidateAsync(person);
 			context.AddErrorsToController(this);
+			ViewData["All errors"] = JsonSerializer.Serialize(context.Errors, new JsonSerializerOptions { WriteIndented = true });
 
 			return View(person);
 		}
