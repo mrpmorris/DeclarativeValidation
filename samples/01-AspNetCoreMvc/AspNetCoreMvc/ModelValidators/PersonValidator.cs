@@ -9,12 +9,15 @@ namespace AspNetCoreMvc.ModelValidators
 	{
 		public PersonValidator()
 		{
-			For(c => c.EmailAddress, v => v.IsNotNull());
-			When(c => c.EmailAddress, it => it.IsNotNull(), v =>
+			For(c => c.EmailAddress, it => it.IsNotNull().IsValidInternetEmailAddress());
+			When(c => c.EmailAddress, it => it.IsNotNull(), it =>
 			{
-				v.HasUniqueEmailAddress(x => $"\"{x}\" is not a valid email address");
+				it.IsAUniqueEmailAddress(x => $"\"{x}\" is not a unique email address");
 			});
-			For(x => x.Address.Lines, v => v.IsNotNull().HasMinLength(2).HasMaxLength(3, getErrorMessage: value => $"Max length 2 but found {value.Length}."));
+			For(x => x.Address.Lines, line => line
+				.IsNotNull()
+				.HasMinLength(2)
+				.HasMaxLength(3, getErrorMessage: value => $"Max length 3 but found {value.Length}."));
 		}
 	}
 }

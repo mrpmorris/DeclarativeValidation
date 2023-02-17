@@ -12,7 +12,7 @@ namespace AspNetCoreMvc.RuleEvaluators.PersonRuleEvaluators
 {
 	public static class ValidateHasUniqueEmailAddressExtension
 	{
-		public static void HasUniqueEmailAddress(
+		public static void IsAUniqueEmailAddress(
 			this ClassValidator<Person> personValidator,
 			Func<string, string> getErrorMessage = null,
 			string errorCode = null)
