@@ -1,4 +1,5 @@
 ﻿Rename TClass to TOwner or TObject
+Implement Scenario
 
 IsEqualTo / IsNotEqualTo
 ======================
