@@ -18,6 +18,7 @@ namespace AspNetCoreMvc.ModelValidators
 				.IsNotNull()
 				.HasMinLength(2, getErrorMessage: _ => $"At least 2 lines are required")
 				.HasMaxLength(3, getErrorMessage: value => $"At most 3 lines are allowed, but found {value.Length}."));
+			ForEachValue(x => x.OtherAddresses, it => it.IsNotNull());
 		}
 	}
 }
