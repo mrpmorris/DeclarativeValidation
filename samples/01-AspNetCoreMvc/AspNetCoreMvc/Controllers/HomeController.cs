@@ -1,10 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using AspNetCoreMvc.Models;
 using PeterLeslieMorris.DeclarativeValidation;
-using System.Linq;
 using AspNetCoreMvc.Extensions;
 using System.Text.Json;
 
@@ -12,14 +10,10 @@ namespace AspNetCoreMvc.Controllers
 {
 	public class HomeController : Controller
 	{
-		private readonly ILogger<HomeController> Logger;
 		private readonly IValidationService ValidationService;
 
-		public HomeController(
-			ILogger<HomeController> logger,
-			IValidationService validationService)
+		public HomeController(IValidationService validationService)
 		{
-			Logger = logger;
 			ValidationService = validationService;
 		}
 

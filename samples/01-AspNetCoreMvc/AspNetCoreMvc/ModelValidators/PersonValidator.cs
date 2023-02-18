@@ -14,10 +14,10 @@ namespace AspNetCoreMvc.ModelValidators
 			{
 				it.IsAUniqueEmailAddress(x => $"\"{x}\" is not a unique email address");
 			});
-			For(x => x.Address.Lines, line => line
+			For(x => x.Address.Lines, lines => lines
 				.IsNotNull()
-				.HasMinLength(2)
-				.HasMaxLength(3, getErrorMessage: value => $"Max length 3 but found {value.Length}."));
+				.HasMinLength(2, getErrorMessage: _ => $"At least 2 lines are required")
+				.HasMaxLength(3, getErrorMessage: value => $"At most 3 lines are allowed, but found {value.Length}."));
 		}
 	}
 }
